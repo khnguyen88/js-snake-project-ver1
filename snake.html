@@ -5,8 +5,31 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Snake Game</title>
+    <link rel="stylesheet" href="./snake.css" />
   </head>
-  <body></body>
+  <body>
+    <section id="startMenuSection"></section>
+    <section id="gameSection">
+      <section id="scoreboardContainer">
+        <div id="P1Scoreboard" class="scores">0</div>
+
+        <!-- P2 Scoreboard to be appended in JS file -->
+        <!-- Comment out in final production -->
+        <div id="P2Scoreboard" class="scores">0</div>
+      </section>
+      <section id="gameboardContainer"></section>
+      <section id="informationContainer">
+        <h2>MENU</h2>
+        <p class="menuItemText">* PRESS ENTER TO PLAY/PAUSE</p>
+        <p class="menuItemText">* PRESS ESC TO QUIT</p>
+        <h2>...</h2>
+        <h2>CONTROLS</h2>
+        <p class="menuItemText">* PLAYER 1 - ARROWS; R. SHIFT</p>
+        <p class="menuItemText">* PLAYER 2 - A,W,S,D; L. SHIFT</p>
+      </section>
+    </section>
+    <section id="creditsSection"></section>
+  </body>
   <!-- Script needs to be module type for export/import of function to work -->
-  <script type="module" src="main.js"></script>
+  <!-- <script type="module" src="main.js"></script> -->
 </html>
