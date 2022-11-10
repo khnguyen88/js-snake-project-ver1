@@ -68,3 +68,58 @@ body {
 .menuItemText {
   line-height: 1.6;
 }
+#startMenuSection {
+  box-sizing: border-box;
+  border: 1em solid #02001a;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+}
+#startMenuLogo {
+  height: 50vh;
+  width: auto;
+  object-fit: cover;
+  margin: auto;
+}
+#smartMenuContainer {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  display: grid;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+}
+#startMenuTitle {
+  color: cyan;
+  text-align: center;
+  font-size: 5vh;
+  margin-top: 5vh;
+  margin-bottom: 2vh;
+}
+.startMenuItem {
+  color: aquamarine;
+  text-align: center;
+  font-size: 3vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+.startMenuItem:hover {
+  color: orangered;
+  transition-duration: 250ms;
+}
+.startMenuNull {
+  color: gray;
+  text-align: center;
+  font-size: 3vh;
+  margin-top: 2vh;
+  margin-bottom: 2vh;
+}
+
+/* Toggle this on and off to show all of the gameSection */
+#gameSection {
+  display: none;
+}
