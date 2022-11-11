@@ -1,12 +1,14 @@
 import { createScoreBoardElement } from "./modules/scoreboard.js";
 import { createCanvasElement } from "./modules/canvas.js";
 
-const startMenuItems = document.getElementById("startMenuItem1");
-startMenuItems.addEventListener("click", () => {
+// Original simple event listener
+const startMenuItem1 = document.getElementById("startMenuItem1");
+startMenuItem1.addEventListener("click", () => {
   myFunction();
 });
 
-startMenuItems.addEventListener("click", myFunction);
+// Alternative for simple event listener
+// startMenuItem1.addEventListener("click", myFunction);
 
 function myFunction() {
   alert("Hello World!");
