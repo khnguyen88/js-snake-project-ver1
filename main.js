@@ -20,7 +20,7 @@ startMenuItem1.addEventListener("click", () => {
 // Simple Event listner by class name
 for (var i = 0; i < startMenuItems.length; i++) {
   startMenuItems[i].addEventListener("click", () => {
-    toggleDisplayofDOMElements(startMenuSection, gameSection);
+    toggleDisplayBetweenTwoDOMElements(startMenuSection, gameSection);
   });
 }
 
@@ -28,7 +28,10 @@ function myFunction() {
   console.log("HI");
 }
 
-function toggleDisplayofDOMElements(DOMElementDefaultDisplayOn, DOMElementDefaultDisplayOff) {
+function toggleDisplayBetweenTwoDOMElements(
+  DOMElementDefaultDisplayOn,
+  DOMElementDefaultDisplayOff
+) {
   let DOMElementOn = DOMElementDefaultDisplayOn;
   let DOMElementOff = DOMElementDefaultDisplayOff;
   // We need to use window.getComputedStyle(element).someCSS property to get style defined in CSS file
