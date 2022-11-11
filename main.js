@@ -1,13 +1,19 @@
 import { createScoreBoardElement } from "./modules/scoreboard.js";
 import { createCanvasElement } from "./modules/canvas.js";
 
-// Original simple event listener
+// Simple Event listner by class name
+const startMenuItems = document.getElementsByClassName("startMenuItem");
+for (var i = 0; i < startMenuItems.length; i++) {
+  startMenuItems[i].addEventListener("click", myFunction);
+}
+
+// Simple Event listner by id
 const startMenuItem1 = document.getElementById("startMenuItem1");
 startMenuItem1.addEventListener("click", () => {
   myFunction();
 });
 
-// Alternative for simple event listener
+// Alternative for simple event listener by id
 // startMenuItem1.addEventListener("click", myFunction);
 
 function myFunction() {
