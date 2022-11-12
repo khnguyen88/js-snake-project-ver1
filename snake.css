@@ -49,7 +49,7 @@ body {
   align-items: center;
   justify-content: center;
 }
-#informationContainer {
+#inGameMenuContainer {
   font-size: 2vh;
   border: 1em solid aquamarine;
   padding: 1em;

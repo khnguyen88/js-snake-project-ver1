@@ -9,23 +9,26 @@ const startMenuItem1 = document.getElementById("startMenuItem1");
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
 
+// Event listener test code
+//----------------------------------------------------------------
 // Simple Event listner by id
 startMenuItem1.addEventListener("click", () => {
   myFunction();
 });
 
+function myFunction() {
+  console.log("HI");
+}
 // Alternative for simple event listener by id
 // startMenuItem1.addEventListener("click", myFunction);
 
+// Code to transition from start menu screen to gameplay screen
+//----------------------------------------------------------------
 // Simple Event listner by class name
 for (var i = 0; i < startMenuItems.length; i++) {
   startMenuItems[i].addEventListener("click", () => {
     toggleDisplayBetweenTwoDOMElements(startMenuSection, gameSection);
   });
-}
-
-function myFunction() {
-  console.log("HI");
 }
 
 function toggleDisplayBetweenTwoDOMElements(
