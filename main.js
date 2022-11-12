@@ -5,6 +5,8 @@ import { createCanvasElement } from "./modules/canvas.js";
 const startMenuSection = document.getElementById("startMenuSection");
 const gameSection = document.getElementById("gameSection");
 const startMenuItem1 = document.getElementById("startMenuItem1");
+const gameboardContainer = document.getElementById("gameboardContainer");
+const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
