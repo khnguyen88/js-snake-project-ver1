@@ -97,7 +97,7 @@ function init_elements() {
   // createCanvasElement();
 }
 
-// Code to animate execute codes inside requestAnimationFrame method at a defined fixed FPS, default animate at 60fps
+// Code to animate execute codes inside requestAnimationFrame method at a defined fixed FPS, default animation is 60fps
 // Source code:  https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 //----------------------------------------------------------------
 // Code to initialize the timer variables and start the animation
@@ -136,5 +136,29 @@ function animate() {
   }
 }
 
+function keyDownBase(event) {
+  // Do not allow any users control keys until they're out of the start menu
+  if (checkDisplayOn(startMenuSection) == false) {
+    switch (event.key) {
+      case "Enter":
+        toggleDisplayForOneElement(inGameMenuContainer);
+        isAninimationOnFlag = toggleAnimationFlag(inGameMenuContainer);
+
+        // Start or unpause animation if the in-game menu is off
+        // Else pause animation if the in-game menu is on
+        if (checkDisplayOn(inGameMenuContainer) == false) {
+          startAnimation(fps);
+        }
+        break;
+
+      case "Escape":
+        alert("End Game!");
+        window.close();
+        break;
+    }
+  }
+}
+
 init_elements();
+document.body.addEventListener("keydown", keyDownBase);
 startAnimation(fps);
