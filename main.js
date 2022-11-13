@@ -13,7 +13,7 @@ const startMenuItems = document.getElementsByClassName("startMenuItem");
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
-var isAninimationOnFlag = true;
+var isAninimationOnFlag = false;
 var fps, fpsInterval, startTime, now, then, elapsed;
 fps = 1;
 
@@ -53,6 +53,38 @@ function toggleDisplayBetweenTwoDOMElements(
   } else {
     DOMElementOff.style.display = "none";
     DOMElementOn.style.display = "grid";
+  }
+}
+
+// Code to check and toggle display of in-game menu during gameplay (at gameplay screen)
+//--------------------------------------------------------------------------------------
+function toggleDisplayForOneElement(SingleDOMElement) {
+  let DOMElement = SingleDOMElement;
+  // We need to use window.getComputedStyle(element).someCSS property to get style defined in CSS file
+  // DOMElement.style.someCSS only gets properties defined in HTML <style> tags. Positions okay, but others not so much
+  if (window.getComputedStyle(DOMElement).display === "none") {
+    DOMElement.style.display = "block";
+  } else {
+    DOMElement.style.display = "none";
+  }
+}
+
+function checkDisplayOn(SingleDOMElement) {
+  let DOMElement = SingleDOMElement;
+
+  if (window.getComputedStyle(DOMElement).display === "none") {
+    return false;
+  } else {
+    return true;
+  }
+}
+
+function toggleAnimationFlag(ingameMenuDOMElement) {
+  let DOMElement = ingameMenuDOMElement;
+  if (window.getComputedStyle(DOMElement).display === "none") {
+    return true;
+  } else {
+    return false;
   }
 }
 
