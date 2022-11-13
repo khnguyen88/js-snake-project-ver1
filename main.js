@@ -159,6 +159,27 @@ function keyDownBase(event) {
   }
 }
 
+function keyDownP1(event) {
+  // Do not allow any users control keys until they're out of the start menu
+  if (checkDisplayOn(startMenuSection) == false && checkDisplayOn(inGameMenuContainer) == false) {
+    switch (event.key) {
+      case "ArrowUp":
+        console.log("Up");
+        break;
+      case "ArrowDown":
+        console.log("Down");
+        break;
+      case "ArrowLeft":
+        console.log("Left");
+        break;
+      case "ArrowRight":
+        console.log("Right");
+        break;
+    }
+  }
+}
+
 init_elements();
 document.body.addEventListener("keydown", keyDownBase);
+document.body.addEventListener("keydown", keyDownP1);
 startAnimation(fps);
