@@ -137,6 +137,16 @@ function animate() {
   }
 }
 
+// Event listner for window resize. Grid and position dependent on size of page.
+// Any change will mess up their placement.
+// ----------------------------------------------------------------------------
+window.addEventListener("resize", () => {
+  alert("Page resize has been detected. Game will be reset! Sorry!");
+  window.location.reload();
+});
+
+// Keydown Event Listeners
+// ----------------------------------------------------------------------------
 function keyDownBase(event) {
   // Do not allow any users control keys until they're out of the start menu
   if (checkDisplayOn(startMenuSection) == false) {
@@ -180,7 +190,8 @@ function keyDownP1(event) {
   }
 }
 
-init_elements();
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
+
+init_elements();
 startAnimation(fps);

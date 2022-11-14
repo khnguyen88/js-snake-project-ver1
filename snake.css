@@ -67,7 +67,9 @@ body {
   min-width: 100vw;
   min-height: 100vh;
   position: relative;
-  display: grid;
+  /* display: none / block - to hide / turn on*/
+  /* Toggle this on and off to show all of the gameSection */
+  display: none;
 }
 #scoreboardContainer {
   background-color: #02001a;
@@ -121,8 +123,4 @@ body {
 }
 .menuItemText {
   line-height: 1.6;
-}
-/* Toggle this on and off to show all of the gameSection */
-#gameSection {
-  display: none;
 }
