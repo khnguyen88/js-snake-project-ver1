@@ -7,67 +7,8 @@ body {
   margin: 0%;
   font-family: "PressStartP2", "Courier New", Courier, monospace;
 }
-#gameSection {
-  box-sizing: border-box;
-  border: 1em solid #02001a;
-  min-width: 100vw;
-  min-height: 100vh;
-  position: relative;
-  display: grid;
-}
-#scoreboardContainer {
-  background-color: #02001a;
-  width: 100%;
-  height: 15%;
-  position: absolute;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-.scores {
-  color: white;
-  text-align: center;
-  font-size: 10vh;
-  width: 40%;
-  height: 20%;
-  margin-bottom: 6vh;
-}
-#P1Scoreboard {
-  color: aquamarine;
-}
-#P2Scoreboard {
-  color: orangered;
-}
-#gameboardContainer {
-  /* Temp background color, use #03002e for final production */
-  background-color: #0b073d;
 
-  width: 100%;
-  height: 85%;
-  top: 15%;
-  position: relative;
-  align-items: center;
-  justify-content: center;
-}
-#inGameMenuContainer {
-  font-size: 2vh;
-  border: 1em solid aquamarine;
-  padding: 1em;
-  color: aquamarine;
-  background-color: #02001a;
-  width: 50%;
-  height: 50%;
-  left: 50%;
-  top: 50%;
-  position: absolute;
-  transform: translate(-50%, -50%);
-  /* display: none / table - to hide / turn on*/
-  display: table;
-  text-align: center;
-}
-.menuItemText {
-  line-height: 1.6;
-}
+/* Styles for Start Menu Section' Elements */
 #startMenuSection {
   box-sizing: border-box;
   border: 1em solid #02001a;
@@ -119,7 +60,76 @@ body {
   margin-bottom: 2vh;
 }
 
-/* Toggle this on and off to show all of the gameSection */
+/* Styles for Game Section's Elements */
 #gameSection {
+  box-sizing: border-box;
+  border: 1em solid #02001a;
+  min-width: 100vw;
+  min-height: 100vh;
+  position: relative;
+  /* display: none / block - to hide / turn on*/
+  /* Toggle this on and off to show all of the gameSection */
   display: none;
+}
+#scoreboardContainer {
+  background-color: #02001a;
+  width: 100%;
+  height: 15%;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.scores {
+  color: white;
+  text-align: center;
+  font-size: 10vh;
+  width: 40%;
+  height: 20%;
+  margin-bottom: 6vh;
+}
+#P1Scoreboard {
+  color: aquamarine;
+}
+#P2Scoreboard {
+  color: orangered;
+}
+#gameboardContainer {
+  /* Temp background color, use #03002e for final production */
+  background-color: #0b073d;
+
+  width: 100%;
+  height: 85%;
+  top: 15%;
+  position: relative;
+  align-items: center;
+  justify-content: center;
+}
+#inGameMenuContainer {
+  font-size: 2vh;
+  border: 1em solid aquamarine;
+  box-shadow: 0 0 1vh rgb(203, 251, 235);
+  padding: 1em;
+  color: aquamarine;
+  background-color: #02001a;
+  width: 80vw;
+  height: 50vh;
+  left: 50%;
+  top: 50%;
+  position: absolute;
+  transform: translate(-50%, -37%);
+  /* display: none / table - to hide / turn on*/
+  display: table;
+  text-align: center;
+}
+.menuItemText {
+  line-height: 1.6;
+}
+#gameboardCanvas {
+  background-color: #0b073d;
+  border: 0.25vh solid rgb(172, 127, 255);
+  border-radius: 1vh;
+  box-shadow: 0 0 1vh #dcbce9;
+  height: 100%;
+  width: 100%;
 }

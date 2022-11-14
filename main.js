@@ -1,15 +1,20 @@
-import { createScoreBoardElement } from "./modules/scoreboard.js";
-import { createCanvasElement } from "./modules/canvas.js";
+import { updateGameboardCanvasSize, addContextToGameboardCanvas } from "./modules/canvas.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
 const gameSection = document.getElementById("gameSection");
 const startMenuItem1 = document.getElementById("startMenuItem1");
 const gameboardContainer = document.getElementById("gameboardContainer");
+const gameboardCanvas = document.getElementById("gameboardCanvas");
 const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
+
+// Initiate Canvas Context
+var gameboardCanvasContext = gameboardCanvas.getContext("2d");
+var canvasCellWidth = 20;
+var canvasCellHeight = 20;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -136,6 +141,30 @@ function animate() {
   }
 }
 
+// Event listener for change to gameplay section change
+// Observes any change to the gameplay section display
+// Source code: https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event
+// ----------------------------------------------------------------------------
+var observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function (mutationRecord) {
+    console.log("style changed!");
+    updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
+    addContextToGameboardCanvas(gameboardCanvas);
+  });
+});
+
+observer.observe(gameSection, { attributes: true, attributeFilter: ["style"] });
+
+// Event listner for window resize. Grid and position dependent on size of page.
+// Any change will mess up their placement.
+// ----------------------------------------------------------------------------
+window.addEventListener("resize", () => {
+  alert("Page resize has been detected. Game will be reset! Sorry!");
+  window.location.reload();
+});
+
+// Keydown Event Listeners
+// ----------------------------------------------------------------------------
 function keyDownBase(event) {
   // Do not allow any users control keys until they're out of the start menu
   if (checkDisplayOn(startMenuSection) == false) {
@@ -179,7 +208,8 @@ function keyDownP1(event) {
   }
 }
 
-init_elements();
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
+
+init_elements();
 startAnimation(fps);
