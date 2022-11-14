@@ -153,13 +153,6 @@ var observer = new MutationObserver(function (mutations) {
     console.log("style changed!");
     updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
     addContextToGameboardCanvas(gameboardCanvas);
-    console.log(gameboardCanvas.scrollHeight);
-    console.log(gameboardCanvas.scrollWidth);
-    console.log(gameboardCanvas.height);
-    console.log(gameboardCanvas.width);
-    console.log("cat");
-    console.log(window.getComputedStyle(gameboardContainer).height);
-    console.log(window.getComputedStyle(gameboardContainer).width);
   });
 });
 
