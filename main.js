@@ -1,5 +1,5 @@
-import { createScoreBoardElement } from "./modules/scoreboard.js";
-import { createCanvasElement } from "./modules/canvas.js";
+// import { createScoreBoardElement } from "./modules/discard/old_scoreboard_test.js";
+// import { createCanvasElement } from "./modules/discard/old_canvas_test.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
