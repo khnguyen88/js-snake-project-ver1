@@ -6,6 +6,7 @@ const startMenuSection = document.getElementById("startMenuSection");
 const gameSection = document.getElementById("gameSection");
 const startMenuItem1 = document.getElementById("startMenuItem1");
 const gameboardContainer = document.getElementById("gameboardContainer");
+const gameboardCanvas = document.getElementById("gameboardCanvas");
 const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 
 // All Initial Dom Elements, Objects, By Class Name, Array
