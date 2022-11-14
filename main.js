@@ -1,5 +1,4 @@
-// import { createScoreBoardElement } from "./modules/discard/old_scoreboard_test.js";
-// import { createCanvasElement } from "./modules/discard/old_canvas_test.js";
+import { updateGameboardCanvasSize } from "./modules/canvas.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
@@ -11,6 +10,14 @@ const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
+
+// Update Gameboard Canvas Size and Initiate Canvas Context
+console.log(gameboardCanvas.height);
+console.log(gameboardCanvas.width);
+
+console.log(gameboardContainer.scrollHeight);
+console.log(gameboardContainer.scrollWidth);
+var gameboardCanvasContext = gameboardCanvas.getContext("2d");
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -136,6 +143,26 @@ function animate() {
     console.log("hi mom");
   }
 }
+
+// Event listener for change to gameplay section change
+// Observes any change to the gameplay section display
+// Source code: https://stackoverflow.com/questions/2157963/is-it-possible-to-listen-to-a-style-change-event
+// ----------------------------------------------------------------------------
+var observer = new MutationObserver(function (mutations) {
+  mutations.forEach(function (mutationRecord) {
+    console.log("style changed!");
+    updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
+    console.log(gameboardCanvas.scrollHeight);
+    console.log(gameboardCanvas.scrollWidth);
+    console.log(gameboardCanvas.height);
+    console.log(gameboardCanvas.width);
+    console.log("cat");
+    console.log(window.getComputedStyle(gameboardContainer).height);
+    console.log(window.getComputedStyle(gameboardContainer).width);
+  });
+});
+
+observer.observe(gameSection, { attributes: true, attributeFilter: ["style"] });
 
 // Event listner for window resize. Grid and position dependent on size of page.
 // Any change will mess up their placement.

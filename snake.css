@@ -108,6 +108,7 @@ body {
 #inGameMenuContainer {
   font-size: 2vh;
   border: 1em solid aquamarine;
+  box-shadow: 0 0 1vh rgb(203, 251, 235);
   padding: 1em;
   color: aquamarine;
   background-color: #02001a;
@@ -123,4 +124,12 @@ body {
 }
 .menuItemText {
   line-height: 1.6;
+}
+#gameboardCanvas {
+  background-color: #0b073d;
+  border: 0.25vh solid rgb(172, 127, 255);
+  border-radius: 1vh;
+  box-shadow: 0 0 1vh #dcbce9;
+  height: 100%;
+  width: 100%;
 }
