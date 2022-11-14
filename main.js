@@ -11,12 +11,7 @@ const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
 
-// Update Gameboard Canvas Size and Initiate Canvas Context
-console.log(gameboardCanvas.height);
-console.log(gameboardCanvas.width);
-
-console.log(gameboardContainer.scrollHeight);
-console.log(gameboardContainer.scrollWidth);
+// Initiate Canvas Context
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
