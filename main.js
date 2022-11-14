@@ -13,6 +13,8 @@ const startMenuItems = document.getElementsByClassName("startMenuItem");
 
 // Initiate Canvas Context
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
+var canvasCellWidth = 20;
+var canvasCellHeight = 20;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
