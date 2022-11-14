@@ -5,8 +5,8 @@ function roundToNearest10(num) {
 function updateGameboardCanvasSize(gameboardCanvas, gameboardContainer) {
   var canvasGameBoard = gameboardCanvas;
   var containerGameboard = gameboardContainer;
-  // Note DOMElement.scrollHeight will provide similar value to window.getComputedStyle(DOMElement.scrollHeight).height
-  // Note DOMElement.scrollWidth will provide similar value to window.getComputedStyle(DOMElement.scrollWidth).width
+  // Note DOMElement.scrollHeight will approximate estimate, can use if desired
+  // Note DOMElement.scrollWidth will approximate estimate, can use if desired
   var containerGameboardHeight = parseInt(window.getComputedStyle(containerGameboard).height);
   var containerGameboardWidth = parseInt(window.getComputedStyle(containerGameboard).width);
   canvasGameBoard.height = roundToNearest10(containerGameboardHeight);
