@@ -1,4 +1,4 @@
-import { updateGameboardCanvasSize } from "./modules/canvas.js";
+import { updateGameboardCanvasSize, addContextToGameboardCanvas } from "./modules/canvas.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
@@ -152,6 +152,7 @@ var observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutationRecord) {
     console.log("style changed!");
     updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
+    addContextToGameboardCanvas(gameboardCanvas);
     console.log(gameboardCanvas.scrollHeight);
     console.log(gameboardCanvas.scrollWidth);
     console.log(gameboardCanvas.height);
