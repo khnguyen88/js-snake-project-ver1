@@ -3,7 +3,7 @@
 // Javascript is a bit confusing since its Prototype Type Based OOP, using classes below because I'm more familiar with it.
 
 class Snake {
-  constructor() {
+  constructor(cellSizeInt, initXDir, initYDir) {
     // Constructor properties and public fields both represent the same thing in JS.
     // https://stackoverflow.com/questions/54851200/what-is-the-difference-between-class-fields-and-properties-in-javascript
 

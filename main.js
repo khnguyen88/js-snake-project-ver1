@@ -13,14 +13,22 @@ const startMenuItems = document.getElementsByClassName("startMenuItem");
 
 // Initiate Canvas Context
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
+var canvasBGColor = window.getComputedStyle(gameboardCanvas).backgroundColor;
+var canvasCellSize = 20;
 var canvasCellWidth = 20;
 var canvasCellHeight = 20;
+
+// Temporary Variable
+var tempXPosition = 40;
+var tempYPosition = 40;
+var tempXDirect = 0;
+var tempYDirect = 1;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 var isAninimationOnFlag = false;
 var fps, fpsInterval, startTime, now, then, elapsed;
-fps = 1;
+fps = 5;
 
 // Event listener test code
 //----------------------------------------------------------------
@@ -138,6 +146,16 @@ function animate() {
 
     // draw stuff here
     console.log("hi mom");
+
+    //TEMP MOVEMENT PIECE
+
+    gameboardCanvasContext.fillStyle = canvasBGColor;
+    gameboardCanvasContext.fillRect(0, 0, gameboardCanvas.width, gameboardCanvas.height);
+
+    tempXPosition += canvasCellSize * tempXDirect;
+    tempYPosition += canvasCellSize * tempYDirect;
+    gameboardCanvasContext.fillStyle = "aquamarine";
+    gameboardCanvasContext.fillRect(tempXPosition, tempYPosition, canvasCellSize, canvasCellSize);
   }
 }
 
@@ -194,15 +212,23 @@ function keyDownP1(event) {
     switch (event.key) {
       case "ArrowUp":
         console.log("Up");
+        tempYDirect = -1;
+        tempXDirect = 0;
         break;
       case "ArrowDown":
         console.log("Down");
+        tempYDirect = 1;
+        tempXDirect = 0;
         break;
       case "ArrowLeft":
         console.log("Left");
+        tempYDirect = 0;
+        tempXDirect = -1;
         break;
       case "ArrowRight":
         console.log("Right");
+        tempYDirect = 0;
+        tempXDirect = 1;
         break;
     }
   }
