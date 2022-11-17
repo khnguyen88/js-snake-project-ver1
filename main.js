@@ -12,11 +12,18 @@ const inGameMenuContainer = document.getElementById("inGameMenuContainer");
 const startMenuItems = document.getElementsByClassName("startMenuItem");
 
 // Initiate Canvas Context
+// Learning source: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API/Tutorial
+// Learning source: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
 var canvasBGColor = window.getComputedStyle(gameboardCanvas).backgroundColor;
 var canvasCellSize = 20;
-var canvasCellWidth = 20;
-var canvasCellHeight = 20;
+// Declared variable name, to populate late Canvas dimensions defaults to arbitary number when it's not displayed;
+// Will populate Canvas Height and Canvas Width when gameboard section is displayed and canvas dimension is updated to fill size of it's container.
+// Not sure if I will need the # of cells in canvas row and column given a cell size unit, will stub out anyways
+var canvasWidth;
+var canvasHeight;
+var canvasColumnCellNum;
+var canvasRowCellNum;
 
 // Temporary Variable
 var tempXPosition = 40;
@@ -28,7 +35,7 @@ var tempYDirect = 1;
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
 var isAninimationOnFlag = false;
 var fps, fpsInterval, startTime, now, then, elapsed;
-fps = 5;
+fps = 10;
 
 // Event listener test code
 //----------------------------------------------------------------
@@ -148,13 +155,23 @@ function animate() {
     console.log("hi mom");
 
     //TEMP MOVEMENT PIECE
-
+    // Clears canvas before every loop, else drawn stuff remains!
+    // Learning source: https://stackoverflow.com/questions/18598838/canvas-fillstyle-none-in-html5
     gameboardCanvasContext.fillStyle = canvasBGColor;
     gameboardCanvasContext.fillRect(0, 0, gameboardCanvas.width, gameboardCanvas.height);
 
+    // Update X,Y position of stubbed snake. Using a starting temporary position
     tempXPosition += canvasCellSize * tempXDirect;
     tempYPosition += canvasCellSize * tempYDirect;
+
+    // Add color to canvas
     gameboardCanvasContext.fillStyle = "aquamarine";
+
+    // Adds glow effect to drawn object
+    // Learning source: https://stackoverflow.com/questions/5067368/html5-canvas-create-outer-glow-effect-of-shape
+    gameboardCanvasContext.shadowBlur = 10;
+    gameboardCanvasContext.shadowColor = "white";
+
     gameboardCanvasContext.fillRect(tempXPosition, tempYPosition, canvasCellSize, canvasCellSize);
   }
 }
@@ -166,8 +183,14 @@ function animate() {
 var observer = new MutationObserver(function (mutations) {
   mutations.forEach(function (mutationRecord) {
     console.log("style changed!");
+
+    // Update canvas height and width based the new size of it's container, based on size of screen;
     updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
     addContextToGameboardCanvas(gameboardCanvas);
+
+    // Assign updated canvas height and width to variables
+    canvasWidth = gameboardCanvas.width;
+    canvasHeight = gameboardCanvas.height;
   });
 });
 
