@@ -24,7 +24,9 @@ export class Snake {
     this.score = 0;
     this.scoreBoardDOMElement = 0;
     this.isAlive = true;
-    document.addEventListener("keydown", (event) => this.movementControls(event), true);
+
+    // Class Event Listener Method 1: Add event listeer within the class
+    // document.addEventListener("keydown", (event) => this.movementControls(event), true);
 
     // https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritanceja
     // https://stackoverflow.com/questions/38122497/javascript-event-listener-called-with-class-method

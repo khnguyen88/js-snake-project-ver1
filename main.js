@@ -33,7 +33,7 @@ var tempXDirect = 0;
 var tempYDirect = 1;
 
 // Temporary Snake;
-var snake;
+var snakeP1;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -197,7 +197,7 @@ var observer = new MutationObserver(function (mutations) {
     canvasHeight = gameboardCanvas.height;
 
     // Create snake object
-    snake = new Snake();
+    snakeP1 = new Snake();
   });
 });
 
@@ -274,6 +274,9 @@ function keyDownP1(event) {
 
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
+
+// Class Event Listener Method 2: Add event listeer outside of the class
+document.body.addEventListener("keydown", (event) => snakeP1.movementControls(event), true);
 
 init_elements();
 startAnimation(fps);
