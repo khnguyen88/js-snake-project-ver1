@@ -198,6 +198,7 @@ var observer = new MutationObserver(function (mutations) {
 
     // Create snake object
     snakeP1 = new Snake();
+    snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
   });
 });
 
@@ -220,6 +221,13 @@ function keyDownBase(event) {
       case "Enter":
         toggleDisplayForOneElement(inGameMenuContainer);
         isAninimationOnFlag = toggleAnimationFlag(inGameMenuContainer);
+
+        // If snakeP1 object is instantiated and exists
+        // Update the snake isPause
+        // Learning source: https://stackoverflow.com/questions/4186906/check-if-object-exists-in-javascript
+        if (typeof snakeP1 != "undefined") {
+          snakeP1.updatePauseStatus(isAninimationOnFlag);
+        }
 
         // Start or unpause animation if the in-game menu is off
         // Else pause animation if the in-game menu is on
@@ -274,9 +282,6 @@ function keyDownP1(event) {
 
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
-
-// Class Event Listener Method 2: Add event listeer outside of the class
-document.body.addEventListener("keydown", (event) => snakeP1.movementControls(event), true);
 
 init_elements();
 startAnimation(fps);

@@ -17,13 +17,15 @@ export class Snake {
     this.cellUnitSize = 0;
     this.xDir = 0;
     this.yDir = 0;
+    this.keyDownInputs = { up: "", down: "", left: "", right: "", shoot: "" };
     this.lastHeadPos = [];
     this.bodyColor = "white";
     this.glowColor = "white";
     this.glowSize = 0;
     this.score = 0;
     this.scoreBoardDOMElement = 0;
-    this.isAlive = true;
+    this.isAliveStatus = true;
+    this.isAnimatedStatus = false;
 
     // Class Event Listener Method 1: Add event listener within the class
     document.addEventListener("keydown", (event) => this.movementControls(event), true);
@@ -53,6 +55,15 @@ export class Snake {
   // Set glow size
   setGlowSize() {
     this.glowSize = parseInt(this.cellUnitSize / 2);
+  }
+
+  // Set keydown inputs
+  setKeyDownInputs(upKey, downKey, leftKey, rightKey, shootKey) {
+    this.keyDownInputs.up = upKey;
+    this.keyDownInputs.down = downKey;
+    this.keyDownInputs.left = leftKey;
+    this.keyDownInputs.right = rightKey;
+    this.keyDownInputs.shoot = shootKey;
   }
 
   // Set the initial position of the snake based on size of the gameboard
@@ -91,8 +102,13 @@ export class Snake {
   // Update the snake scoreboard
   updateScoreBoard() {}
 
-  // Set the score of user snake
+  // Update the score of user snake
   updateScore() {}
+
+  // Update the pausedStatus
+  updatePauseStatus(AnimationStatus) {
+    this.isAnimatedStatus = AnimationStatus;
+  }
 
   // Function that grows the body of the snake by one unit and update the snake position
   // (or adjust positions of all of the snake units)
@@ -107,26 +123,47 @@ export class Snake {
   // Event Listener movements for player snake
   // Need to do a bit more research on this
   movementControls(event) {
-    switch (event.key) {
-      case "ArrowUp":
-        console.log("Up");
-        console.log("YEAAAAAAAAAAHHH");
-        break;
+    console.log("Pause Status" + this.isAnimatedStatus);
+    if (this.isAnimatedStatus == true) {
+      switch (event.key) {
+        case this.keyDownInputs.up:
+          console.log("Up");
+          if (this.yDir == 0) {
+            this.yDir = -1;
+            this.xDir = 0;
+          }
+          console.log("YEAAAHHH-UP");
+          console.log("WHAT............" + this.isAnimatedStatus);
+          break;
 
-      case "ArrowDown":
-        console.log("Down");
-        console.log("YEAAAAAAAAAAHHH");
-        break;
+        case this.keyDownInputs.down:
+          console.log("Down");
+          if (this.yDir == 0) {
+            this.yDir = 1;
+            this.xDir = 0;
+          }
+          console.log("YEAAAHHH-DOWN");
+          console.log("WHAT............" + this.isAnimatedStatus);
+          break;
 
-      case "ArrowLeft":
-        console.log("Left");
-        console.log("YEAAAAAAAAAAHHH");
-        break;
+        case this.keyDownInputs.left:
+          if (this.xDir == 0) {
+            this.yDir = 0;
+            this.xDir = -1;
+            console.log("YEAAAHHH-LEFT");
+            console.log("WHAT............" + this.isAnimatedStatus);
+          }
+          break;
 
-      case "ArrowRight":
-        console.log("Right");
-        console.log("YEAAAAAAAAAAHHH");
-        break;
+        case this.keyDownInputs.right:
+          if (this.xDir == 0) {
+            this.yDir = 0;
+            this.xDir = 1;
+            console.log("YEAAAHHH-RIGHT");
+            console.log("WHAT............" + this.isAnimatedStatus);
+          }
+          break;
+      }
     }
   }
 
