@@ -68,15 +68,12 @@ export class Snake {
 
   // Set the initial position of the snake based on size of the gameboard
   // Adds an object literal w/ X and Y coordinate {x: 20, y: 20} to snake body array
-  setPosition(inputXPos, inputYPos) {
+  setInitPosition(inputXPos, inputYPos) {
     this.snakeBody.push({ x: inputXPos, y: inputYPos });
   }
 
   // Set the intial direction of the snake
   setInitDirection() {}
-
-  // Set the initial position of the snake
-  setInitPosition() {}
 
   // Set the snake scoreboard
   setScoreBoard(inputScoreBoardDOMElement) {
@@ -118,7 +115,7 @@ export class Snake {
 
   // Method to draw snake on gameboard canvas
   // Pass canvas into draw method
-  draw() {}
+  draw(canvasDOMElement) {}
 
   // Event Listener movements for player snake
   // Need to do a bit more research on this
@@ -173,13 +170,15 @@ export class Snake {
   // Checks if snake dies
   deathCheck() {}
 
-  // Checks if snake "head" collided w/ enemys
+  // Checks if snake "head" collided w/ wall
   collisionWithWall() {}
 
-  // Checks if snake "head" collided w/ enemys
+  // Checks if snake "head" collided w/ enemy "head"
+  // Both player loses
   collisionWithEnemyBodyCheck() {}
 
-  // Checks if snake "head"
+  // Checks if snake "head" collided w/ enemy "body"
+  // This player's snake loses
   collisionWithEnemyHeadCheck() {}
 
   // Snake dies
