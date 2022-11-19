@@ -2,7 +2,7 @@
 // Snake Class -> Extends to other snakes, P1Snake, P2Snake, and PCSnake - each with their own set of controls and movment
 // Javascript is a bit confusing since its Prototype Type Based OOP, using classes below because I'm more familiar with it.
 
-class Snake {
+export class Snake {
   constructor() {
     // Constructor properties and public fields both represent the same thing in JS.
     // https://stackoverflow.com/questions/54851200/what-is-the-difference-between-class-fields-and-properties-in-javascript
@@ -24,6 +24,9 @@ class Snake {
     this.score = 0;
     this.scoreBoardDOMElement = 0;
     this.isAlive = true;
+
+    // Class Event Listener Method 1: Add event listener within the class
+    document.addEventListener("keydown", (event) => this.movementControls(event), true);
 
     // https://stackoverflow.com/questions/816071/prototype-based-vs-class-based-inheritanceja
     // https://stackoverflow.com/questions/38122497/javascript-event-listener-called-with-class-method
@@ -103,7 +106,29 @@ class Snake {
 
   // Event Listener movements for player snake
   // Need to do a bit more research on this
-  movementControls() {}
+  movementControls(event) {
+    switch (event.key) {
+      case "ArrowUp":
+        console.log("Up");
+        console.log("YEAAAAAAAAAAHHH");
+        break;
+
+      case "ArrowDown":
+        console.log("Down");
+        console.log("YEAAAAAAAAAAHHH");
+        break;
+
+      case "ArrowLeft":
+        console.log("Left");
+        console.log("YEAAAAAAAAAAHHH");
+        break;
+
+      case "ArrowRight":
+        console.log("Right");
+        console.log("YEAAAAAAAAAAHHH");
+        break;
+    }
+  }
 
   // Check position of snake "head", at element [0] in body
   // If snake head position coordinates (X, Y) matches the food

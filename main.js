@@ -1,4 +1,5 @@
 import { updateGameboardCanvasSize, addContextToGameboardCanvas } from "./modules/canvas.js";
+import { Snake } from "./modules/snake.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
@@ -30,6 +31,9 @@ var tempXPosition = 40;
 var tempYPosition = 40;
 var tempXDirect = 0;
 var tempYDirect = 1;
+
+// Temporary Snake;
+var snakeP1;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -191,6 +195,9 @@ var observer = new MutationObserver(function (mutations) {
     // Assign updated canvas height and width to variables
     canvasWidth = gameboardCanvas.width;
     canvasHeight = gameboardCanvas.height;
+
+    // Create snake object
+    snakeP1 = new Snake();
   });
 });
 
@@ -234,7 +241,6 @@ function keyDownP1(event) {
   if (checkDisplayOn(startMenuSection) == false && checkDisplayOn(inGameMenuContainer) == false) {
     switch (event.key) {
       case "ArrowUp":
-        console.log("Up");
         if (tempYDirect == 0) {
           tempYDirect = -1;
           tempXDirect = 0;
@@ -242,7 +248,6 @@ function keyDownP1(event) {
 
         break;
       case "ArrowDown":
-        console.log("Down");
         if (tempYDirect == 0) {
           tempYDirect = 1;
           tempXDirect = 0;
@@ -250,7 +255,6 @@ function keyDownP1(event) {
 
         break;
       case "ArrowLeft":
-        console.log("Left");
         if (tempXDirect == 0) {
           tempYDirect = 0;
           tempXDirect = -1;
@@ -258,7 +262,6 @@ function keyDownP1(event) {
 
         break;
       case "ArrowRight":
-        console.log("Right");
         if (tempXDirect == 0) {
           tempYDirect = 0;
           tempXDirect = 1;
@@ -271,6 +274,9 @@ function keyDownP1(event) {
 
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
+
+// Class Event Listener Method 2: Add event listeer outside of the class
+document.body.addEventListener("keydown", (event) => snakeP1.movementControls(event), true);
 
 init_elements();
 startAnimation(fps);
