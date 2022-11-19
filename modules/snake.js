@@ -114,8 +114,8 @@ export class Snake {
   growBody() {}
 
   // Method to draw snake on gameboard canvas
-  // Pass canvas into draw method
-  draw(canvasDOMElement) {}
+  // Pass canvas context object into draw method
+  draw(gameboardCanvasContext) {}
 
   // Event Listener movements for player snake
   // Need to do a bit more research on this
