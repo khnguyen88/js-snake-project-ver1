@@ -235,23 +235,35 @@ function keyDownP1(event) {
     switch (event.key) {
       case "ArrowUp":
         console.log("Up");
-        tempYDirect = -1;
-        tempXDirect = 0;
+        if (tempYDirect == 0) {
+          tempYDirect = -1;
+          tempXDirect = 0;
+        }
+
         break;
       case "ArrowDown":
         console.log("Down");
-        tempYDirect = 1;
-        tempXDirect = 0;
+        if (tempYDirect == 0) {
+          tempYDirect = 1;
+          tempXDirect = 0;
+        }
+
         break;
       case "ArrowLeft":
         console.log("Left");
-        tempYDirect = 0;
-        tempXDirect = -1;
+        if (tempXDirect == 0) {
+          tempYDirect = 0;
+          tempXDirect = -1;
+        }
+
         break;
       case "ArrowRight":
         console.log("Right");
-        tempYDirect = 0;
-        tempXDirect = 1;
+        if (tempXDirect == 0) {
+          tempYDirect = 0;
+          tempXDirect = 1;
+        }
+
         break;
     }
   }
