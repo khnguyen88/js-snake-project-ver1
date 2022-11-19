@@ -129,7 +129,11 @@ body {
   background-color: #0b073d;
   border: 0.25vh solid rgb(172, 127, 255);
   border-radius: 1vh;
+  /* Learning source: https://stackoverflow.com/questions/5670879/css-html-create-a-glowing-border-around-an-input-field */
   box-shadow: 0 0 1vh #dcbce9;
   height: 100%;
   width: 100%;
 }
+
+/* Consider using this to get text outer glow */
+/* Learning source https://stackoverflow.com/questions/40393497/text-outer-glow-effect-using-css */

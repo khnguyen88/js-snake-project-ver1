@@ -1,5 +1,6 @@
 function roundToNearest10(num) {
-  return Math.floor(num / 10) * 10;
+  var cellUnitSize = 20;
+  return Math.floor(num / cellUnitSize) * cellUnitSize;
 }
 
 // This function adjusts and updates the canvas height and width based off container
