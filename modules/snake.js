@@ -123,7 +123,6 @@ export class Snake {
   // Event Listener movements for player snake
   // Need to do a bit more research on this
   movementControls(event) {
-    console.log("Pause Status" + this.isAnimatedStatus);
     if (this.isAnimatedStatus == true) {
       switch (event.key) {
         case this.keyDownInputs.up:
@@ -133,7 +132,6 @@ export class Snake {
             this.xDir = 0;
           }
           console.log("YEAAAHHH-UP");
-          console.log("WHAT............" + this.isAnimatedStatus);
           break;
 
         case this.keyDownInputs.down:
@@ -143,7 +141,6 @@ export class Snake {
             this.xDir = 0;
           }
           console.log("YEAAAHHH-DOWN");
-          console.log("WHAT............" + this.isAnimatedStatus);
           break;
 
         case this.keyDownInputs.left:
@@ -151,7 +148,6 @@ export class Snake {
             this.yDir = 0;
             this.xDir = -1;
             console.log("YEAAAHHH-LEFT");
-            console.log("WHAT............" + this.isAnimatedStatus);
           }
           break;
 
@@ -160,7 +156,6 @@ export class Snake {
             this.yDir = 0;
             this.xDir = 1;
             console.log("YEAAAHHH-RIGHT");
-            console.log("WHAT............" + this.isAnimatedStatus);
           }
           break;
       }
