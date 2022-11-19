@@ -32,12 +32,14 @@ var tempYPosition = 40;
 var tempXDirect = 0;
 var tempYDirect = 1;
 
-// Temporary Snake;
+// Declared, but undefined Snake;
 var snakeP1;
+var snakeP2;
+var snakePC;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
-var isAninimationOnFlag = false;
+var isAnimationOnFlag = false;
 var fps, fpsInterval, startTime, now, then, elapsed;
 fps = 10;
 
@@ -137,8 +139,8 @@ function startAnimation(fps) {
 //  and only draws if your specified fps interval is achieved
 function animate() {
   // Stop animation if check flag is off
-  console.log(isAninimationOnFlag);
-  if (!isAninimationOnFlag) {
+  console.log(isAnimationOnFlag);
+  if (!isAnimationOnFlag) {
     return;
   }
 
@@ -196,8 +198,9 @@ var observer = new MutationObserver(function (mutations) {
     canvasWidth = gameboardCanvas.width;
     canvasHeight = gameboardCanvas.height;
 
-    // Create snake object
+    // Created P1 snake object
     snakeP1 = new Snake();
+    snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
   });
 });
 
@@ -219,7 +222,14 @@ function keyDownBase(event) {
     switch (event.key) {
       case "Enter":
         toggleDisplayForOneElement(inGameMenuContainer);
-        isAninimationOnFlag = toggleAnimationFlag(inGameMenuContainer);
+        isAnimationOnFlag = toggleAnimationFlag(inGameMenuContainer);
+
+        // If snakeP1 object is instantiated and exists
+        // Update the snake isAnimatedStatus to reflect isAnimation
+        // Learning source: https://stackoverflow.com/questions/4186906/check-if-object-exists-in-javascript
+        if (typeof snakeP1 != "undefined") {
+          snakeP1.updatePauseStatus(isAnimationOnFlag);
+        }
 
         // Start or unpause animation if the in-game menu is off
         // Else pause animation if the in-game menu is on
@@ -274,9 +284,6 @@ function keyDownP1(event) {
 
 document.body.addEventListener("keydown", keyDownBase);
 document.body.addEventListener("keydown", keyDownP1);
-
-// Class Event Listener Method 2: Add event listeer outside of the class
-document.body.addEventListener("keydown", (event) => snakeP1.movementControls(event), true);
 
 init_elements();
 startAnimation(fps);
