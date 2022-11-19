@@ -32,8 +32,10 @@ var tempYPosition = 40;
 var tempXDirect = 0;
 var tempYDirect = 1;
 
-// Temporary Snake;
+// Declared, but undefined Snake;
 var snakeP1;
+var snakeP2;
+var snakePC;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -196,7 +198,7 @@ var observer = new MutationObserver(function (mutations) {
     canvasWidth = gameboardCanvas.width;
     canvasHeight = gameboardCanvas.height;
 
-    // Create snake object
+    // Created P1 snake object
     snakeP1 = new Snake();
     snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
   });
