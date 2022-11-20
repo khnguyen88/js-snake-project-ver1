@@ -1,4 +1,9 @@
-import { updateGameboardCanvasSize, addContextToGameboardCanvas } from "./modules/canvas.js";
+import {
+  updateGameboardCanvasSize,
+  addContextToGameboardCanvas,
+  clearGameboardCanvasContext,
+  cellUnitSizeBasedOnWindowSize,
+} from "./modules/canvas.js";
 import { Snake } from "./modules/snake.js";
 
 // All Initial DOM Element Objects, By ID, Single
@@ -17,7 +22,7 @@ const startMenuItems = document.getElementsByClassName("startMenuItem");
 // Learning source: https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
 var canvasBGColor = window.getComputedStyle(gameboardCanvas).backgroundColor;
-var canvasCellSize = 20;
+var canvasCellSize = cellUnitSizeBasedOnWindowSize(window.innerHeight, window.innerWidth);
 // Declared variable name, to populate late Canvas dimensions defaults to arbitary number when it's not displayed;
 // Will populate Canvas Height and Canvas Width when gameboard section is displayed and canvas dimension is updated to fill size of it's container.
 // Not sure if I will need the # of cells in canvas row and column given a cell size unit, will stub out anyways
@@ -131,7 +136,6 @@ function startAnimation(fps) {
   fpsInterval = 1000 / fps;
   then = Date.now();
   startTime = then;
-  console.log(startTime);
   animate();
 }
 
@@ -139,7 +143,6 @@ function startAnimation(fps) {
 //  and only draws if your specified fps interval is achieved
 function animate() {
   // Stop animation if check flag is off
-  console.log(isAnimationOnFlag);
   if (!isAnimationOnFlag) {
     return;
   }
@@ -157,14 +160,9 @@ function animate() {
     // specified fpsInterval not being a multiple of RAF's interval (16.7ms)
     then = now - (elapsed % fpsInterval);
 
-    // draw stuff here
-    console.log("hi mom");
-
     //TEMP MOVEMENT PIECE
-    // Clears canvas before every loop, else drawn stuff remains!
-    // Learning source: https://stackoverflow.com/questions/18598838/canvas-fillstyle-none-in-html5
-    gameboardCanvasContext.fillStyle = canvasBGColor;
-    gameboardCanvasContext.fillRect(0, 0, gameboardCanvas.width, gameboardCanvas.height);
+    // Clears canvas before every loop, else previous drawn stuff remains!
+    clearGameboardCanvasContext(gameboardCanvas, gameboardCanvasContext, canvasBGColor);
 
     // Update X,Y position of stubbed snake. Using a starting temporary position
     tempXPosition += canvasCellSize * tempXDirect;
@@ -191,7 +189,7 @@ var observer = new MutationObserver(function (mutations) {
     console.log("style changed!");
 
     // Update canvas height and width based the new size of it's container, based on size of screen;
-    updateGameboardCanvasSize(gameboardCanvas, gameboardContainer);
+    updateGameboardCanvasSize(gameboardCanvas, gameboardContainer, canvasCellSize);
     addContextToGameboardCanvas(gameboardCanvas);
 
     // Assign updated canvas height and width to variables
