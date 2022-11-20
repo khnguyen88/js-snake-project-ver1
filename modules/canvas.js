@@ -1,6 +1,16 @@
+// Use to make sure everything rounds to the nearest unit size
 function roundToNearestUnitSize(num, unitSize) {
-  // Unit Size will always either be 10 or 20 based on screen resolution
+  // Unit Size will always either be 20 or 40 based on screen resolution
   return Math.floor(num / unitSize) * unitSize;
+}
+
+// Use to randomly set the starting position of object on canvas
+function randomizedBasedOnUnitSize(unitSize) {
+  // Returns a random integer from 0 to (unitSize - 2)
+  var randomNum = Math.floor(Math.random() * (unitSize - 1));
+
+  // Adjust a randonmize interger to range from 1 to (unitSize - 1)
+  return randomNum + 1;
 }
 
 // This function adjusts and updates the canvas height and width based off container
@@ -34,14 +44,47 @@ function clearGameboardCanvasContext(gameboardCanvas, gameboardCanvasContext, ca
   gameboardCanvasContext.fillRect(0, 0, gameboardCanvas.width, gameboardCanvas.height);
 }
 
-// ToDo: Add function that will define cell size based on dimension or resolution of screen
-// This size of cell unit will. Currently cells are in 20x20 in test function
+// This function defines the cell size based on dimension or resolution of screen
 function cellUnitSizeBasedOnWindowSize(windowHeight, windowWidth) {
-  if ((windowWidth <= 500) & (windowHeight <= 1000)) {
+  if ((windowWidth <= 3000) & (windowHeight <= 2000)) {
     return 20;
   } else {
     return 40;
   }
+}
+
+// This function helps defines the starting position of objects drawin within the canvas
+function startingPositionBasedOnCanvasAndCellSize(gameboardCanvas, cellSize, position = "") {
+  var cellUnitSize = cellSize;
+  var gameboardCanvasHeight = gameboardCanvas.height;
+  var gameboardCanvasWidth = gameboardCanvas.width;
+  var positionOnCanvas = position;
+
+  var x = 0;
+  var y = roundToNearestUnitSize(gameboardCanvasHeight / 2 - cellUnitSize, cellUnitSize);
+
+  // User specified to draw object at center of canvas
+  if (positionOnCanvas == "center") {
+    x = roundToNearestUnitSize(gameboardCanvasWidth / 2 - cellUnitSize, cellUnitSize);
+  }
+  // User specified to draw object 1/5 of the canvas from left
+  else if (positionOnCanvas == "left") {
+    x = roundToNearestUnitSize(gameboardCanvasWidth * (1 / 5), cellUnitSize);
+  }
+  // User specified to draw object 1/5 of the canvas from the right
+  else if (positionOnCanvas == "right") {
+    x = roundToNearestUnitSize(gameboardCanvasWidth * (4 / 5), cellUnitSize);
+  }
+  // No specification, position will be randomized
+  else {
+    let xRandom = randomizedBasedOnUnitSize(cellUnitSize);
+    let yRandom = randomizedBasedOnUnitSize(cellUnitSize);
+
+    x = roundToNearestUnitSize(gameboardCanvasWidth * (xRandom / cellUnitSize), cellUnitSize);
+    y = roundToNearestUnitSize(gameboardCanvasHeight * (yRandom / cellUnitSize), cellUnitSize);
+  }
+
+  return { xPos: x, yPos: y };
 }
 
 export {
@@ -49,4 +92,5 @@ export {
   addContextToGameboardCanvas,
   clearGameboardCanvasContext,
   cellUnitSizeBasedOnWindowSize,
+  startingPositionBasedOnCanvasAndCellSize,
 };

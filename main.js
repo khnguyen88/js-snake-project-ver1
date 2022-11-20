@@ -3,6 +3,7 @@ import {
   addContextToGameboardCanvas,
   clearGameboardCanvasContext,
   cellUnitSizeBasedOnWindowSize,
+  startingPositionBasedOnCanvasAndCellSize,
 } from "./modules/canvas.js";
 import { Snake } from "./modules/snake.js";
 
@@ -199,6 +200,14 @@ var observer = new MutationObserver(function (mutations) {
     // Created P1 snake object
     snakeP1 = new Snake();
     snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
+    let startingP1TempPosition = startingPositionBasedOnCanvasAndCellSize(
+      gameboardCanvas,
+      canvasCellSize,
+      "center"
+    );
+
+    tempXPosition = startingP1TempPosition.xPos;
+    tempYPosition = startingP1TempPosition.yPos;
   });
 });
 
