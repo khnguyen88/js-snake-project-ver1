@@ -13,7 +13,6 @@ export class Snake {
     //Each element contains an X, Y coordinate. Possibly color? Think about it.
     //Each element will be object literal w/ X and Y coordinate {x: 20, y: 20}
     this.snakeBody = [];
-    this.bodyLength = 0;
     this.cellUnitSize = 0;
     this.xDir = 0;
     this.yDir = 0;
@@ -24,7 +23,6 @@ export class Snake {
     this.glowSize = 0;
     this.score = 0;
     this.scoreBoardDOMElement;
-    this.canvasDOMElementContext;
     this.isAliveStatus = true;
     this.isAnimatedStatus = false;
 
