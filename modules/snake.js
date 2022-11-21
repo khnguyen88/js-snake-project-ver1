@@ -134,6 +134,11 @@ export class Snake {
     this.score = 0;
   }
 
+  // Get snakeBody array
+  getSnakeBodyArray() {
+    return this.snakeBody;
+  }
+
   // Update the direction of the snake based on user or AI controls
   updateDirection(newX, newY) {
     this.xDir = newX;

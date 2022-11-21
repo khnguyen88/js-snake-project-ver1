@@ -22,6 +22,7 @@ export class Food {
       this.canvasRowCells,
       this.cellUnitSize
     );
+    this.foodIndexToUpdate = -1;
 
     // If the total amount of food eaten equals the product of the canvas height and width minus snake
     // We can obtain this number from the sum of scoreboard minus (1 or 2, depending on the single player or multiplayer mode)
@@ -54,14 +55,31 @@ export class Food {
   }
 
   // Update any food element's position in the set where food was eaten or collided with an object
-  updateFoodSetPosition() {}
+  updateFoodSetPosition(indexToUpdate, canvasColumnCellNum, canvasRowCellNum, cellUnitSize) {
+    let newXPos = this.randomizedBasedOnCanvasCellCount(canvasColumnCellNum) * cellUnitSize;
+    let newYPos = this.randomizedBasedOnCanvasCellCount(canvasRowCellNum) * cellUnitSize;
+    this.foodSet[indexToUpdate] = { x: newXPos, y: newYPos };
+  }
 
   // Update food set size as the avaliable space on the canvas decreases
   updateFoodSetSize() {}
 
   // Checks if there is any collision between a snake object
   // Call updateFoodSet to update food element that has been eaten by snake
-  checkSnakeCollision(someSnakeObject) {}
+  checkSnakeCollision(someSnakeObjectArray) {
+    let snakeHead = someSnakeObjectArray[0];
+    for (let i = 0; i < this.foodSet.length; i++) {
+      if (this.foodSet[i].x == snakeHead.x && this.foodSet[i].y == snakeHead.y) {
+        console.log("NOOM");
+        this.updateFoodSetPosition(
+          i,
+          this.canvasColumCells,
+          this.canvasRowCells,
+          this.cellUnitSize
+        );
+      }
+    }
+  }
 
   // Update the food number if there is no user input
   // Generate based on canvas resolution
