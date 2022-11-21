@@ -181,20 +181,23 @@ export class Snake {
   // based on the snake's current position, direction, and cellsize
   // if the snake "head" has eaten or collided with food.
   growBody() {
+    // If we want to grow the snake at the head we can just duplicate code in updatePosition()
+    // and exclude the code to pop the last element.
+    // However pushes the snake forward a little by one unit
+
+    // This particular line of code grow the snake at the tail
     if (this.snakeBody.length > 0) {
-      // Store the last head position of the snake
-      this.lastHeadPos.x = this.snakeBody[0].x;
-      this.lastHeadPos.y = this.snakeBody[0].y;
+      // Store the last tail position of the snake
+      let oldXTailPos = this.snakeBody[this.snakeBody.length - 1].x;
+      let oldYTailPos = this.snakeBody[this.snakeBody.length - 1].y;
 
-      // Update the head position of the snake and temporary store in the variable
-      let newXHeadPos = this.lastHeadPos.x + this.cellUnitSize * this.xDir;
-      let newYHeadPos = this.lastHeadPos.y + this.cellUnitSize * this.yDir;
+      // Create a new new tail position of the snake based on the previous tail position,
+      // cell size and current direction of the snake, and temporary store in the variable
+      let newXTailPos = oldXTailPos - this.cellUnitSize * this.xDir;
+      let newYTailPos = oldYTailPos - this.cellUnitSize * this.yDir;
 
-      // Update the position of all cells in the snake body
-      // We can do this by insert new head with the next position at the beginning of the snake body,
-      // this will effectively shift the old positions of each position down the body, and
-      // after we remove the old tail. The position will be updated throughout the snake body
-      this.snakeBody.splice(0, 0, { x: newXHeadPos, y: newYHeadPos });
+      // Insert the new tail position of the snake at the end
+      this.snakeBody.push({ x: newXTailPos, y: newYTailPos });
     }
   }
 
