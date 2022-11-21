@@ -163,6 +163,7 @@ function animate() {
 
     if (typeof food != "undefined") {
       food.draw(gameboardCanvasContext);
+      food.checkSnakeCollision(snakeP1.getSnakeBodyArray());
     }
   }
 }
