@@ -180,7 +180,23 @@ export class Snake {
   // (or adjust positions of all of the snake units)
   // based on the snake's current position, direction, and cellsize
   // if the snake "head" has eaten or collided with food.
-  growBody() {}
+  growBody() {
+    if (this.snakeBody.length > 0) {
+      // Store the last head position of the snake
+      this.lastHeadPos.x = this.snakeBody[0].x;
+      this.lastHeadPos.y = this.snakeBody[0].y;
+
+      // Update the head position of the snake and temporary store in the variable
+      let newXHeadPos = this.lastHeadPos.x + this.cellUnitSize * this.xDir;
+      let newYHeadPos = this.lastHeadPos.y + this.cellUnitSize * this.yDir;
+
+      // Update the position of all cells in the snake body
+      // We can do this by insert new head with the next position at the beginning of the snake body,
+      // this will effectively shift the old positions of each position down the body, and
+      // after we remove the old tail. The position will be updated throughout the snake body
+      this.snakeBody.splice(0, 0, { x: newXHeadPos, y: newYHeadPos });
+    }
+  }
 
   // Method to draw snake on gameboard canvas
   // Pass canvas context object into draw method
@@ -244,6 +260,11 @@ export class Snake {
             this.xDir = 1;
             console.log("YEAAAHHH-RIGHT");
           }
+          break;
+
+        case " ":
+          console.log("YEAAAHHH-Space");
+          this.growBody();
           break;
       }
     }
