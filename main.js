@@ -36,12 +36,6 @@ var canvasHeight;
 var canvasColumnCellNum;
 var canvasRowCellNum;
 
-// Temporary Variable
-var tempXPosition = 40;
-var tempYPosition = 40;
-var tempXDirect = 0;
-var tempYDirect = 1;
-
 // Declared, but undefined Snake;
 var snakeP1;
 var snakeP2;
@@ -159,20 +153,6 @@ function animate() {
     // Clears canvas before every loop, else previous drawn stuff remains!
     clearGameboardCanvasContext(gameboardCanvas, gameboardCanvasContext, canvasBGColor);
 
-    // Update X,Y position of stubbed snake. Using a starting temporary position
-    tempXPosition += canvasCellSize * tempXDirect;
-    tempYPosition += canvasCellSize * tempYDirect;
-
-    // Add color to canvas
-    gameboardCanvasContext.fillStyle = "aquamarine";
-
-    // Adds glow effect to drawn object
-    // Learning source: https://stackoverflow.com/questions/5067368/html5-canvas-create-outer-glow-effect-of-shape
-    gameboardCanvasContext.shadowBlur = 10;
-    gameboardCanvasContext.shadowColor = "white";
-
-    gameboardCanvasContext.fillRect(tempXPosition, tempYPosition, canvasCellSize, canvasCellSize);
-
     if (typeof snakeP1 != "undefined") {
       snakeP1.updatePosition();
       snakeP1.draw(gameboardCanvasContext);
@@ -205,7 +185,7 @@ var observer = new MutationObserver(function (mutations) {
 
     snakeP1 = new Snake();
     snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
-    // snakeP1.setInitPosition(snakeP1startingPosition.xPos, snakeP1startingPosition.yPos);
+    snakeP1.setInitPosition(snakeP1startingPosition.xPos, snakeP1startingPosition.yPos);
     snakeP1.setInitDirection();
     snakeP1.setBodyAndGlowColors("aquamarine", "white");
     snakeP1.setCellSize(canvasCellSize);
@@ -260,44 +240,7 @@ function keyDownBase(event) {
   }
 }
 
-function keyDownP1(event) {
-  // Do not allow any users control keys until they're out of the start menu
-  if (checkDisplayOn(startMenuSection) == false && checkDisplayOn(inGameMenuContainer) == false) {
-    switch (event.key) {
-      case "ArrowUp":
-        if (tempYDirect == 0) {
-          tempYDirect = -1;
-          tempXDirect = 0;
-        }
-
-        break;
-      case "ArrowDown":
-        if (tempYDirect == 0) {
-          tempYDirect = 1;
-          tempXDirect = 0;
-        }
-
-        break;
-      case "ArrowLeft":
-        if (tempXDirect == 0) {
-          tempYDirect = 0;
-          tempXDirect = -1;
-        }
-
-        break;
-      case "ArrowRight":
-        if (tempXDirect == 0) {
-          tempYDirect = 0;
-          tempXDirect = 1;
-        }
-
-        break;
-    }
-  }
-}
-
 document.body.addEventListener("keydown", keyDownBase);
-document.body.addEventListener("keydown", keyDownP1);
 
 init_elements();
 startAnimation(fps);

@@ -12,10 +12,7 @@ export class Snake {
     //This array field represents the snake, each unit of body is represented an element inside the array
     //Each element contains an X, Y coordinate. Possibly color? Think about it.
     //Each element will be object literal w/ X and Y coordinate {x: 20, y: 20}
-    this.snakeBody = [
-      { x: 80, y: 80 },
-      { x: 100, y: 80 },
-    ];
+    this.snakeBody = [];
     this.bodyLength = 0;
     this.cellUnitSize = 0;
     this.xDir = 0;
