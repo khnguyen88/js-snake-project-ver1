@@ -4,12 +4,13 @@ function roundToNearestUnitSize(num, unitSize) {
   return Math.floor(num / unitSize) * unitSize;
 }
 
-// Use to randomly set the starting position of object on canvas
-function randomizedBasedOnUnitSize(unitSize) {
-  // Returns a random integer from 0 to (unitSize - 2)
-  var randomNum = Math.floor(Math.random() * (unitSize - 1));
+// Use to randomly set the starting position of object based on canvas's row or column cells
+function randomizedBasedOnCanvasCellCount(canvasDimensionCellNum) {
+  // Generates a random integer from 0 to (canvas's row or column cell count - 2)
+  var randomNum = Math.floor(Math.random() * (canvasDimensionCellNum - 1));
 
-  // Adjust a randonmize interger to range from 1 to (unitSize - 1)
+  // Adjust a randonmize integer to range from 1 to (canvas's row or column cell count - 1)
+  // We do this to ensure everything remains within bound
   return randomNum + 1;
 }
 
@@ -77,14 +78,26 @@ function startingPositionBasedOnCanvasAndCellSize(gameboardCanvas, cellSize, pos
   }
   // No specification, position will be randomized
   else {
-    let xRandom = randomizedBasedOnUnitSize(cellUnitSize);
-    let yRandom = randomizedBasedOnUnitSize(cellUnitSize);
+    let canvasCellNum = getCanvasCellNum(gameboardCanvas, cellUnitSize);
+    let canvasRowNum = canvasCellNum.columnUnit;
+    let canvasColumnNum = canvasCellNum.rowUnit;
 
-    x = roundToNearestUnitSize(gameboardCanvasWidth * (xRandom / cellUnitSize), cellUnitSize);
-    y = roundToNearestUnitSize(gameboardCanvasHeight * (yRandom / cellUnitSize), cellUnitSize);
+    let xRandom = randomizedBasedOnCanvasCellCount(canvasColumnNum);
+    let yRandom = randomizedBasedOnCanvasCellCount(canvasRowNum);
+
+    x = roundToNearestUnitSize(gameboardCanvasWidth * (xRandom / canvasColumnNum), cellUnitSize);
+    y = roundToNearestUnitSize(gameboardCanvasHeight * (yRandom / canvasRowNum), cellUnitSize);
   }
 
   return { xPos: x, yPos: y };
+}
+
+// Function that returns the number of columns and rows a canvas can have based on the cell unit size
+function getCanvasCellNum(gameboardCanvas, cellSize) {
+  var canvasColumnNum = gameboardCanvas.width / cellSize;
+  var canvasRowNum = gameboardCanvas.height / cellSize;
+
+  return { columnUnit: canvasColumnNum, rowUnit: canvasRowNum };
 }
 
 export {
@@ -93,4 +106,5 @@ export {
   clearGameboardCanvasContext,
   cellUnitSizeBasedOnWindowSize,
   startingPositionBasedOnCanvasAndCellSize,
+  getCanvasCellNum,
 };

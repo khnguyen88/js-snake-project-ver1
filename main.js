@@ -4,6 +4,7 @@ import {
   clearGameboardCanvasContext,
   cellUnitSizeBasedOnWindowSize,
   startingPositionBasedOnCanvasAndCellSize,
+  getCanvasCellNum,
 } from "./modules/canvas.js";
 import { Snake } from "./modules/snake.js";
 
@@ -203,11 +204,15 @@ var observer = new MutationObserver(function (mutations) {
     let startingP1TempPosition = startingPositionBasedOnCanvasAndCellSize(
       gameboardCanvas,
       canvasCellSize,
-      "center"
+      ""
     );
 
     tempXPosition = startingP1TempPosition.xPos;
     tempYPosition = startingP1TempPosition.yPos;
+
+    let canvasCellNums = getCanvasCellNum(gameboardCanvas, canvasCellSize);
+    canvasColumnCellNum = canvasCellNums.columnUnit;
+    canvasRowCellNum = canvasCellNums.rowUnit;
   });
 });
 
