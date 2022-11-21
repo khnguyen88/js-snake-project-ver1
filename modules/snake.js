@@ -18,12 +18,13 @@ export class Snake {
     this.xDir = 0;
     this.yDir = 0;
     this.keyDownInputs = { up: "", down: "", left: "", right: "", shoot: "" };
-    this.lastHeadPos = [];
+    this.lastHeadPos = { x: 0, y: 0 };
     this.bodyColor = "white";
     this.glowColor = "white";
     this.glowSize = 0;
     this.score = 0;
-    this.scoreBoardDOMElement = 0;
+    this.scoreBoardDOMElement;
+    this.canvasDOMElementContext;
     this.isAliveStatus = true;
     this.isAnimatedStatus = false;
 
@@ -42,7 +43,7 @@ export class Snake {
   // Some methods may have dependencies on one another, but shall be kept to minimum
 
   // Sets the basic body and glow color of the snake
-  setBodyGlowColors(inputBodyColor, inputGlowColor) {
+  setBodyAndGlowColors(inputBodyColor, inputGlowColor) {
     this.bodyColor = inputBodyColor;
     this.glowColor = inputGlowColor;
   }
@@ -73,10 +74,60 @@ export class Snake {
   }
 
   // Set the intial direction of the snake
-  setInitDirection() {}
+  // Direction can be either -1, 0, 1
+  // Snake can only move in one direction at a time, so if the x-direction is -1 or 1,
+  // then the y-direction must be 0, and vice versa
+  setInitDirection(initXDir = 0, initYDir = 0) {
+    // If the initial x direction and y direction are a) both set to zero, b) set the same value,
+    // c) the initial x direction is less than -1 or greater than 1,
+    // d) the initial y direction is less than -1 or greater than 1,
+    // e) the initial x direction is 1 while the y direction is -1, and
+    // f) the initial x direction is -1 while the y direction is 1, then we
+    // will generate a new set of direction values
+    if (
+      (initXDir == 0 && initYDir == 0) ||
+      initXDir == initYDir ||
+      (initXDir < -1 && initXDir > 1) ||
+      (initYDir < -1 && initYDir > 1) ||
+      (initXDir == 1 && initYDir == -1) ||
+      (initXDir == -1 && initYDir == 1)
+    ) {
+      // Generates x-direction value
+      // Generates a random numbers from 0 through 2.
+      let randomizeNumX = Math.floor(Math.random() * 3);
+
+      // If the randomized number is 2, assign a -1 to the x-direction
+      if (randomizeNumX == 2) {
+        this.xDir = -1;
+        this.yDir = 0;
+      }
+
+      // If the randomized number is 1, assign a 1 to the x-direction, and 0 to the y-direction
+      else if (randomizeNumX == 1) {
+        this.xDir = 1;
+        this.yDir = 0;
+      }
+      // If the randomized number is 0, assign 0 to x-direction, and generate numbers for y-direction
+      else {
+        this.xDir = 0;
+
+        // Generates y-direction value
+        // Generates a random numbers from 0 through 1.
+        let randomizeNumY = Math.floor(Math.random() * 2);
+        if (randomizeNumY == 1) {
+          this.yDir = 1;
+        } else {
+          this.yDir = -1;
+        }
+      }
+    } else {
+      this.xDir = initXDir;
+      this.yDir = initYDir;
+    }
+  }
 
   // Set the snake scoreboard
-  setScoreBoard(inputScoreBoardDOMElement) {
+  setScoreBoardObject(inputScoreBoardDOMElement) {
     this.scoreBoardDOMElement = inputScoreBoardDOMElement;
   }
 
@@ -94,7 +145,25 @@ export class Snake {
   // Update the position of the snake at the next frame
   // (or adjust positions of all of the snake units)
   // Given it's current position, direction, and cellsize
-  updatePosition() {}
+  updatePosition() {
+    if (this.snakeBody.length > 0) {
+      // Store the last head position of the snake
+      this.lastHeadPos.x = this.snakeBody[0].x;
+      this.lastHeadPos.y = this.snakeBody[0].y;
+
+      // Update the head position of the snake and temporary store in the variable
+      let newXHeadPos = this.lastHeadPos.x + this.cellUnitSize * this.xDir;
+      let newYHeadPos = this.lastHeadPos.y + this.cellUnitSize * this.yDir;
+
+      // Update the position of all cells in the snake body
+      // We can do this by insert new head with the next position at the beginning of the snake body,
+      // this will effectively shift the old positions of each position down the body, and
+      // after we remove the old tail. The position will be updated throughout the snake body
+
+      this.snakeBody.splice(0, 0, { x: newXHeadPos, y: newYHeadPos });
+      this.snakeBody.pop();
+    }
+  }
 
   // Update the snake scoreboard
   updateScoreBoard() {}
@@ -111,11 +180,51 @@ export class Snake {
   // (or adjust positions of all of the snake units)
   // based on the snake's current position, direction, and cellsize
   // if the snake "head" has eaten or collided with food.
-  growBody() {}
+  growBody() {
+    // If we want to grow the snake at the head we can just duplicate code in updatePosition()
+    // and exclude the code to pop the last element.
+    // However pushes the snake forward a little by one unit
+
+    // This particular line of code grow the snake at the tail
+    if (this.snakeBody.length > 0) {
+      // Store the last tail position of the snake
+      let oldXTailPos = this.snakeBody[this.snakeBody.length - 1].x;
+      let oldYTailPos = this.snakeBody[this.snakeBody.length - 1].y;
+
+      // Create a new new tail position of the snake based on the previous tail position,
+      // cell size and current direction of the snake, and temporary store in the variable
+      let newXTailPos = oldXTailPos - this.cellUnitSize * this.xDir;
+      let newYTailPos = oldYTailPos - this.cellUnitSize * this.yDir;
+
+      // Insert the new tail position of the snake at the end
+      this.snakeBody.push({ x: newXTailPos, y: newYTailPos });
+    }
+  }
 
   // Method to draw snake on gameboard canvas
   // Pass canvas context object into draw method
-  draw(gameboardCanvasContext) {}
+  draw(gameboardCanvasContext) {
+    // Update X,Y position of stubbed snake. Using a starting temporary position
+    if (this.snakeBody.length > 0) {
+      // Add color to canvas
+      gameboardCanvasContext.fillStyle = this.bodyColor;
+
+      // Adds glow effect to drawn object
+      // Learning source: https://stackoverflow.com/questions/5067368/html5-canvas-create-outer-glow-effect-of-shape
+      gameboardCanvasContext.shadowBlur = this.glowSize;
+      gameboardCanvasContext.shadowColor = this.glowColor;
+
+      // Iterate through each snake cell and draw into canvas context
+      for (let i = 0; i < this.snakeBody.length; i++) {
+        gameboardCanvasContext.fillRect(
+          this.snakeBody[i].x,
+          this.snakeBody[i].y,
+          this.cellUnitSize,
+          this.cellUnitSize
+        );
+      }
+    }
+  }
 
   // Event Listener movements for player snake
   // Need to do a bit more research on this
@@ -154,6 +263,11 @@ export class Snake {
             this.xDir = 1;
             console.log("YEAAAHHH-RIGHT");
           }
+          break;
+
+        case " ":
+          console.log("YEAAAHHH-Space");
+          this.growBody();
           break;
       }
     }
