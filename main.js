@@ -15,6 +15,8 @@ const startMenuItem1 = document.getElementById("startMenuItem1");
 const gameboardContainer = document.getElementById("gameboardContainer");
 const gameboardCanvas = document.getElementById("gameboardCanvas");
 const inGameMenuContainer = document.getElementById("inGameMenuContainer");
+const P1scoreboard = document.getElementById("P1Scoreboard");
+const P2scoreboard = document.getElementById("P2Scoreboard");
 
 // All Initial Dom Elements, Objects, By Class Name, Array
 const startMenuItems = document.getElementsByClassName("startMenuItem");
@@ -25,6 +27,7 @@ const startMenuItems = document.getElementsByClassName("startMenuItem");
 var gameboardCanvasContext = gameboardCanvas.getContext("2d");
 var canvasBGColor = window.getComputedStyle(gameboardCanvas).backgroundColor;
 var canvasCellSize = cellUnitSizeBasedOnWindowSize(window.innerHeight, window.innerWidth);
+
 // Declared variable name, to populate late Canvas dimensions defaults to arbitary number when it's not displayed;
 // Will populate Canvas Height and Canvas Width when gameboard section is displayed and canvas dimension is updated to fill size of it's container.
 // Not sure if I will need the # of cells in canvas row and column given a cell size unit, will stub out anyways
@@ -50,18 +53,8 @@ var isAnimationOnFlag = false;
 var fps, fpsInterval, startTime, now, then, elapsed;
 fps = 10;
 
-// Event listener test code
+// Event listener test code set
 //----------------------------------------------------------------
-// Simple Event listner by id
-startMenuItem1.addEventListener("click", () => {
-  myFunction();
-});
-
-function myFunction() {
-  console.log("HI");
-}
-// Alternative for simple event listener by id
-// startMenuItem1.addEventListener("click", myFunction);
 
 // Code to transition from start menu screen to gameplay screen
 //----------------------------------------------------------------
@@ -179,6 +172,10 @@ function animate() {
     gameboardCanvasContext.shadowColor = "white";
 
     gameboardCanvasContext.fillRect(tempXPosition, tempYPosition, canvasCellSize, canvasCellSize);
+
+    if (typeof snakeP1 != "undefined") {
+      snakeP1.draw(gameboardCanvasContext);
+    }
   }
 }
 
@@ -198,17 +195,21 @@ var observer = new MutationObserver(function (mutations) {
     canvasWidth = gameboardCanvas.width;
     canvasHeight = gameboardCanvas.height;
 
-    // Created P1 snake object
-    snakeP1 = new Snake();
-    snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
-    let startingP1TempPosition = startingPositionBasedOnCanvasAndCellSize(
+    // Create P1 snake object and set properties
+    let snakeP1startingPosition = startingPositionBasedOnCanvasAndCellSize(
       gameboardCanvas,
       canvasCellSize,
-      ""
+      "left"
     );
 
-    tempXPosition = startingP1TempPosition.xPos;
-    tempYPosition = startingP1TempPosition.yPos;
+    snakeP1 = new Snake();
+    snakeP1.setKeyDownInputs("ArrowUp", "ArrowDown", "ArrowLeft", "ArrowRight", "");
+    // snakeP1.setInitPosition(snakeP1startingPosition.xPos, snakeP1startingPosition.yPos);
+    snakeP1.setInitDirection();
+    snakeP1.setBodyAndGlowColors("aquamarine", "white");
+    snakeP1.setCellSize(canvasCellSize);
+    snakeP1.setGlowSize();
+    snakeP1.setScoreBoardObject(P1scoreboard);
 
     let canvasCellNums = getCanvasCellNum(gameboardCanvas, canvasCellSize);
     canvasColumnCellNum = canvasCellNums.columnUnit;

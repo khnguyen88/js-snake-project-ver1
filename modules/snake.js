@@ -12,7 +12,10 @@ export class Snake {
     //This array field represents the snake, each unit of body is represented an element inside the array
     //Each element contains an X, Y coordinate. Possibly color? Think about it.
     //Each element will be object literal w/ X and Y coordinate {x: 20, y: 20}
-    this.snakeBody = [];
+    this.snakeBody = [
+      { x: 80, y: 80 },
+      { x: 100, y: 80 },
+    ];
     this.bodyLength = 0;
     this.cellUnitSize = 0;
     this.xDir = 0;
@@ -23,7 +26,8 @@ export class Snake {
     this.glowColor = "white";
     this.glowSize = 0;
     this.score = 0;
-    this.scoreBoardDOMElement = 0;
+    this.scoreBoardDOMElement;
+    this.canvasDOMElementContext;
     this.isAliveStatus = true;
     this.isAnimatedStatus = false;
 
@@ -42,7 +46,7 @@ export class Snake {
   // Some methods may have dependencies on one another, but shall be kept to minimum
 
   // Sets the basic body and glow color of the snake
-  setBodyGlowColors(inputBodyColor, inputGlowColor) {
+  setBodyAndGlowColors(inputBodyColor, inputGlowColor) {
     this.bodyColor = inputBodyColor;
     this.glowColor = inputGlowColor;
   }
@@ -73,10 +77,60 @@ export class Snake {
   }
 
   // Set the intial direction of the snake
-  setInitDirection() {}
+  // Direction can be either -1, 0, 1
+  // Snake can only move in one direction at a time, so if the x-direction is -1 or 1,
+  // then the y-direction must be 0, and vice versa
+  setInitDirection(initXDir = 0, initYDir = 0) {
+    // If the initial x direction and y direction are a) both set to zero, b) set the same value,
+    // c) the initial x direction is less than -1 or greater than 1,
+    // d) the initial y direction is less than -1 or greater than 1,
+    // e) the initial x direction is 1 while the y direction is -1, and
+    // f) the initial x direction is -1 while the y direction is 1, then we
+    // will generate a new set of direction values
+    if (
+      (initXDir == 0 && initYDir == 0) ||
+      initXDir == initYDir ||
+      (initXDir < -1 && initXDir > 1) ||
+      (initYDir < -1 && initYDir > 1) ||
+      (initXDir == 1 && initYDir == -1) ||
+      (initXDir == -1 && initYDir == 1)
+    ) {
+      // Generates x-direction value
+      // Generates a random numbers from 0 through 2.
+      let randomizeNumX = Math.floor(Math.random() * 3);
+
+      // If the randomized number is 2, assign a -1 to the x-direction
+      if (randomizeNumX == 2) {
+        this.xDir = -1;
+        this.yDir = 0;
+      }
+
+      // If the randomized number is 1, assign a 1 to the x-direction, and 0 to the y-direction
+      else if (randomizeNumX == 1) {
+        this.xDir = 1;
+        this.yDir = 0;
+      }
+      // If the randomized number is 0, assign 0 to x-direction, and generate numbers for y-direction
+      else {
+        this.xDir = 0;
+
+        // Generates y-direction value
+        // Generates a random numbers from 0 through 1.
+        let randomizeNumY = Math.floor(Math.random() * 2);
+        if (randomizeNumY == 1) {
+          this.yDir = 1;
+        } else {
+          this.yDir = -1;
+        }
+      }
+    } else {
+      this.xDir = initXDir;
+      this.yDir = initYDir;
+    }
+  }
 
   // Set the snake scoreboard
-  setScoreBoard(inputScoreBoardDOMElement) {
+  setScoreBoardObject(inputScoreBoardDOMElement) {
     this.scoreBoardDOMElement = inputScoreBoardDOMElement;
   }
 
@@ -115,7 +169,28 @@ export class Snake {
 
   // Method to draw snake on gameboard canvas
   // Pass canvas context object into draw method
-  draw(gameboardCanvasContext) {}
+  draw(gameboardCanvasContext) {
+    // Update X,Y position of stubbed snake. Using a starting temporary position
+    if (this.snakeBody.length > 0) {
+      // Add color to canvas
+      gameboardCanvasContext.fillStyle = this.bodyColor;
+
+      // Adds glow effect to drawn object
+      // Learning source: https://stackoverflow.com/questions/5067368/html5-canvas-create-outer-glow-effect-of-shape
+      gameboardCanvasContext.shadowBlur = this.glowSize;
+      gameboardCanvasContext.shadowColor = this.glowColor;
+
+      // Iterate through each snake cell and draw into canvas context
+      for (let i = 0; i < this.snakeBody.length; i++) {
+        gameboardCanvasContext.fillRect(
+          this.snakeBody[i].x,
+          this.snakeBody[i].y,
+          this.cellUnitSize,
+          this.cellUnitSize
+        );
+      }
+    }
+  }
 
   // Event Listener movements for player snake
   // Need to do a bit more research on this
