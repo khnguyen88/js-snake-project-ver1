@@ -7,6 +7,7 @@ import {
   getCanvasCellNum,
 } from "./modules/canvas.js";
 import { Snake } from "./modules/snake.js";
+import { Food } from "./modules/food.js";
 
 // All Initial DOM Element Objects, By ID, Single
 const startMenuSection = document.getElementById("startMenuSection");
@@ -37,9 +38,11 @@ var canvasColumnCellNum;
 var canvasRowCellNum;
 
 // Declared, but undefined Snake;
+
 var snakeP1;
 var snakeP2;
 var snakePC;
+var food;
 
 // Other global variables used to throttle framerate down from 60fps for requestAnimationbyFrame
 // Source code: https://stackoverflow.com/questions/19764018/controlling-fps-with-requestanimationframe
@@ -157,6 +160,10 @@ function animate() {
       snakeP1.updatePosition();
       snakeP1.draw(gameboardCanvasContext);
     }
+
+    if (typeof food != "undefined") {
+      food.draw(gameboardCanvasContext);
+    }
   }
 }
 
@@ -195,6 +202,9 @@ var observer = new MutationObserver(function (mutations) {
     let canvasCellNums = getCanvasCellNum(gameboardCanvas, canvasCellSize);
     canvasColumnCellNum = canvasCellNums.columnUnit;
     canvasRowCellNum = canvasCellNums.rowUnit;
+
+    // Create food set object
+    food = new Food(canvasCellSize, canvasColumnCellNum, canvasRowCellNum, 0);
   });
 });
 
