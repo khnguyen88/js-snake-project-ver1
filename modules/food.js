@@ -44,7 +44,7 @@ export class Food {
     return randomNum + 1;
   }
 
-  // Generate the number food set based on the number of user request and store in database
+  // Generates the number of food based on the user input and stores it in the food set array
   initializeFoodSet(num, canvasColumnCellNum, canvasRowCellNum, cellUnitSize) {
     for (let i = 0; i < num; i++) {
       let tempXPos = this.randomizedBasedOnCanvasCellCount(canvasColumnCellNum) * cellUnitSize;
@@ -64,7 +64,7 @@ export class Food {
   checkSnakeCollision(someSnakeObject) {}
 
   // Update the food number if there is no user input
-  // Generate based on screen resolution
+  // Generate based on canvas resolution
   setFoodNum(userFoodNumInput, canvasColumnCellNum, canvasRowCellNum, cellUnitSize) {
     if (userFoodNumInput <= 0) {
       let newFoodNum = 0;
