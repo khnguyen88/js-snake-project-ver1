@@ -21,7 +21,7 @@ export class Snake {
     this.xDir = 0;
     this.yDir = 0;
     this.keyDownInputs = { up: "", down: "", left: "", right: "", shoot: "" };
-    this.lastHeadPos = [];
+    this.lastHeadPos = { x: 0, y: 0 };
     this.bodyColor = "white";
     this.glowColor = "white";
     this.glowSize = 0;
@@ -148,7 +148,25 @@ export class Snake {
   // Update the position of the snake at the next frame
   // (or adjust positions of all of the snake units)
   // Given it's current position, direction, and cellsize
-  updatePosition() {}
+  updatePosition() {
+    if (this.snakeBody.length > 0) {
+      // Store the last head position of the snake
+      this.lastHeadPos.x = this.snakeBody[0].x;
+      this.lastHeadPos.y = this.snakeBody[0].y;
+
+      // Update the head position of the snake and temporary store in the variable
+      let newXHeadPos = this.lastHeadPos.x + this.cellUnitSize * this.xDir;
+      let newYHeadPos = this.lastHeadPos.y + this.cellUnitSize * this.yDir;
+
+      // Update the position of all cells in the snake body
+      // We can do this by insert new head with the next position at the beginning of the snake body,
+      // this will effectively shift the old positions of each position down the body, and
+      // after we remove the old tail. The position will be updated throughout the snake body
+
+      this.snakeBody.splice(0, 0, { x: newXHeadPos, y: newYHeadPos });
+      this.snakeBody.pop();
+    }
+  }
 
   // Update the snake scoreboard
   updateScoreBoard() {}

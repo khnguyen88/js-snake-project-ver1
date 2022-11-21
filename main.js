@@ -174,6 +174,7 @@ function animate() {
     gameboardCanvasContext.fillRect(tempXPosition, tempYPosition, canvasCellSize, canvasCellSize);
 
     if (typeof snakeP1 != "undefined") {
+      snakeP1.updatePosition();
       snakeP1.draw(gameboardCanvasContext);
     }
   }
