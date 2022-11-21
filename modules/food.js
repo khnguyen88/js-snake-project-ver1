@@ -14,13 +14,24 @@ export class Food {
     this.canvasColumCells = canvasColumnCellNum;
     this.canvasRowCells = canvasRowCellNum;
 
-    this.foodCount = initFoodNum;
-    this.updateFoodCount(initFoodNum, this.canvasColumCells, this.canvasRowCells);
-    this.initializeFoodSet(this.foodCount, this.canvasColumCells, this.canvasRowCells);
+    this.foodNum = initFoodNum;
+    this.setFoodNum(initFoodNum, this.canvasColumCells, this.canvasRowCells, this.cellUnitSize);
+    this.initializeFoodSet(
+      this.foodNum,
+      this.canvasColumCells,
+      this.canvasRowCells,
+      this.cellUnitSize
+    );
+
+    // If the total amount of food eaten equals the product of the canvas height and width minus snake
+    // We can obtain this number from the sum of scoreboard minus (1 or 2, depending on the single player or multiplayer mode)
+    // We can obtained this from snake object scores
+    // We subtract one or two points
+    this.totalFoodEatenCount = 0;
 
     this.foodColor = "gold";
     this.glowColor = "lemonchiffon";
-    this.glowSize = cellUnitSize / 2;
+    this.glowSize = this.cellUnitSize / 2;
   }
 
   // Use to randomly set the starting position of object based on canvas's row or column cells
@@ -34,16 +45,19 @@ export class Food {
   }
 
   // Generate the number food set based on the number of user request and store in database
-  initializeFoodSet(num, canvasColumnCellNum, canvasRowCellNum) {
+  initializeFoodSet(num, canvasColumnCellNum, canvasRowCellNum, cellUnitSize) {
     for (let i = 0; i < num; i++) {
-      let tempXPos = this.randomizedBasedOnCanvasCellCount(canvasColumnCellNum);
-      let tempYPos = this.randomizedBasedOnCanvasCellCount(canvasRowCellNum);
+      let tempXPos = this.randomizedBasedOnCanvasCellCount(canvasColumnCellNum) * cellUnitSize;
+      let tempYPos = this.randomizedBasedOnCanvasCellCount(canvasRowCellNum) * cellUnitSize;
       this.foodSet.push({ x: tempXPos, y: tempYPos });
     }
   }
 
   // Update any food element's position in the set where food was eaten or collided with an object
-  updateFoodSet() {}
+  updateFoodSetPosition() {}
+
+  // Update food set size as the avaliable space on the canvas decreases
+  updateFoodSetSize() {}
 
   // Checks if there is any collision between a snake object
   // Call updateFoodSet to update food element that has been eaten by snake
@@ -51,25 +65,26 @@ export class Food {
 
   // Update the food number if there is no user input
   // Generate based on screen resolution
-  updateFoodCount(userFoodNumInput, canvasColumnCellNum, canvasRowCellNum) {
+  setFoodNum(userFoodNumInput, canvasColumnCellNum, canvasRowCellNum, cellUnitSize) {
     if (userFoodNumInput <= 0) {
       let newFoodNum = 0;
-      let canvasResolutionInKilo = (canvasColumnCellNum * canvasRowCellNum) / 1000;
+      let canvasResolutionInKilo =
+        (canvasColumnCellNum * canvasRowCellNum * Math.pow(cellUnitSize, 2)) / 1000;
       if (canvasResolutionInKilo <= 250) {
-        let = newFoodNum = 2;
+        newFoodNum = 2;
       } else if (canvasResolutionInKilo > 250 && canvasResolutionInKilo <= 500) {
-        let = newFoodNum = 3;
+        newFoodNum = 3;
       } else if (canvasResolutionInKilo > 500 && canvasResolutionInKilo <= 1000) {
-        let = newFoodNum = 5;
+        newFoodNum = 5;
       } else if (canvasResolutionInKilo > 1000 && canvasResolutionInKilo <= 2000) {
-        let = newFoodNum = 7;
+        newFoodNum = 7;
       } else if (canvasResolutionInKilo > 2000 && canvasResolutionInKilo <= 4000) {
-        let = newFoodNum = 10;
+        newFoodNum = 10;
       } else if (canvasResolutionInKilo > 4000) {
-        let = newFoodNum = 20;
+        newFoodNum = 20;
       }
+      this.foodNum = newFoodNum;
     }
-    this.foodCount = newFoodNum;
   }
 
   draw(gameboardCanvasContext) {
