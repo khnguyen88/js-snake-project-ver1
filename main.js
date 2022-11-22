@@ -159,9 +159,11 @@ function animate() {
     if (typeof snakeP1 != "undefined") {
       snakeP1.updatePosition();
       snakeP1.draw(gameboardCanvasContext);
+      snakeP1.eatFoodCheck(food.foodEatenFlag);
     }
 
     if (typeof food != "undefined") {
+      food.resetFoodEatenFlag();
       food.draw(gameboardCanvasContext);
       food.checkSnakeCollision(snakeP1.getSnakeBodyArray());
     }
