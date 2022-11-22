@@ -239,28 +239,24 @@ export class Snake {
     if (this.isAnimatedStatus == true) {
       switch (event.key) {
         case this.keyDownInputs.up:
-          console.log("Up");
           if (this.yDir == 0) {
             this.yDir = -1;
             this.xDir = 0;
           }
-          console.log("YEAAAHHH-UP");
           break;
 
         case this.keyDownInputs.down:
-          console.log("Down");
           if (this.yDir == 0) {
             this.yDir = 1;
             this.xDir = 0;
           }
-          console.log("YEAAAHHH-DOWN");
+
           break;
 
         case this.keyDownInputs.left:
           if (this.xDir == 0) {
             this.yDir = 0;
             this.xDir = -1;
-            console.log("YEAAAHHH-LEFT");
           }
           break;
 
@@ -268,12 +264,10 @@ export class Snake {
           if (this.xDir == 0) {
             this.yDir = 0;
             this.xDir = 1;
-            console.log("YEAAAHHH-RIGHT");
           }
           break;
 
         case " ":
-          console.log("YEAAAHHH-Space");
           this.growBody();
           break;
       }
@@ -289,7 +283,6 @@ export class Snake {
   // Snake will take this value and update the food position at index i that was eaten
   // We want to do this to ensure that snake eat food
   eatFoodCheck(foodEatenFlag) {
-    console.log(foodEatenFlag);
     if (foodEatenFlag) {
       this.updateScore();
       this.updateScoreBoard();
