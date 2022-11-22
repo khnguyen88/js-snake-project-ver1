@@ -169,10 +169,14 @@ export class Snake {
   }
 
   // Update the snake scoreboard
-  updateScoreBoard() {}
+  updateScoreBoard() {
+    this.scoreBoardDOMElement.innerHTML = this.score;
+  }
 
   // Update the score of user snake
-  updateScore() {}
+  updateScore() {
+    this.score++;
+  }
 
   // Update the pausedStatus
   updatePauseStatus(AnimationStatus) {
