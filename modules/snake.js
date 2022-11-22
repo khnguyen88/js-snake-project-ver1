@@ -25,6 +25,7 @@ export class Snake {
     this.scoreBoardDOMElement;
     this.isAliveStatus = true;
     this.isAnimatedStatus = false;
+    this.hasEatenFoodSetIndex = -1;
 
     // Class Event Listener Method 1: Add event listener within the class
     document.addEventListener("keydown", (event) => this.movementControls(event), true);
@@ -282,11 +283,20 @@ export class Snake {
   // Else return element index of eaten food
   // Snake will take this value and update the food position at index i that was eaten
   // We want to do this to ensure that snake eat food
-  eatFoodCheck(foodEatenFlag) {
-    if (foodEatenFlag) {
+  eatFoodCheck(foodCollisionIndex) {
+    if (foodCollisionIndex >= 0) {
       this.updateScore();
       this.updateScoreBoard();
       this.growBody();
+    }
+  }
+
+  collisionWithFood(foodSetArray) {
+    let tempFoodArray = foodSetArray;
+    for (let i = 0; i < tempFoodArray.length; i++) {
+      if (tempFoodArray[i].x == this.snakeBody[0].x && tempFoodArray[i].y == this.snakeBody[0].y) {
+        this.hasEatenFoodSetIndex = i;
+      }
     }
   }
 
@@ -304,6 +314,14 @@ export class Snake {
   // This player's snake loses
   collisionWithEnemyHeadCheck() {}
 
+  // Checks if snake "head" collided w/ own "body"
+  // This player's snake loses
+  collisionWithEnemyHeadCheck() {}
+
   // Snake dies
   die() {}
+
+  resetEatenFoodSetIndex() {
+    this.hasEatenFoodSetIndex = -1;
+  }
 }
