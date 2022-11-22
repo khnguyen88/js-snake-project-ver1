@@ -13,7 +13,7 @@ export class Food {
     this.cellUnitSize = setCellUnitSize;
     this.canvasColumCells = canvasColumnCellNum;
     this.canvasRowCells = canvasRowCellNum;
-
+    this.foodEatenFlag = false;
     this.foodNum = initFoodNum;
     this.setFoodNum(initFoodNum, this.canvasColumCells, this.canvasRowCells, this.cellUnitSize);
     this.initializeFoodSet(
@@ -70,15 +70,19 @@ export class Food {
     let snakeHead = someSnakeObjectArray[0];
     for (let i = 0; i < this.foodSet.length; i++) {
       if (this.foodSet[i].x == snakeHead.x && this.foodSet[i].y == snakeHead.y) {
-        console.log("NOOM");
         this.updateFoodSetPosition(
           i,
           this.canvasColumCells,
           this.canvasRowCells,
           this.cellUnitSize
         );
+        this.foodEatenFlag = true;
       }
     }
+  }
+
+  resetFoodEatenFlag() {
+    this.foodEatenFlag = false;
   }
 
   // Update the food number if there is no user input
@@ -126,5 +130,9 @@ export class Food {
         );
       }
     }
+  }
+
+  getFoodEatenFlag() {
+    return this.foodEatenFlag;
   }
 }
