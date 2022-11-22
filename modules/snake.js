@@ -278,11 +278,14 @@ export class Snake {
 
   // Check position of snake "head", at element [0] in body
   // If snake head position coordinates (X, Y) matches the food
-  eatFoodCheck() {}
-
-  // Check position of snake "head", at element [0] in body
-  // If snake head position coordinates (X, Y) matches the food
-  eatFoodCheck() {}
+  eatFoodCheck(foodEatenFlag) {
+    console.log(foodEatenFlag);
+    if (foodEatenFlag) {
+      this.updateScore();
+      this.updateScoreBoard();
+      this.growBody();
+    }
+  }
 
   // Checks if snake dies
   deathCheck() {}
