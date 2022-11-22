@@ -278,6 +278,12 @@ export class Snake {
 
   // Check position of snake "head", at element [0] in body
   // If snake head position coordinates (X, Y) matches the food
+  // To Do: Move food eaten algorithm check over into snake class
+  // Pass in foodSet array into parameter and check
+  // If food not eaten return -1
+  // Else return element index of eaten food
+  // Snake will take this value and update the food position at index i that was eaten
+  // We want to do this to ensure that snake eat food
   eatFoodCheck(foodEatenFlag) {
     console.log(foodEatenFlag);
     if (foodEatenFlag) {
