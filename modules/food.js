@@ -13,7 +13,6 @@ export class Food {
     this.cellUnitSize = setCellUnitSize;
     this.canvasColumCells = canvasColumnCellNum;
     this.canvasRowCells = canvasRowCellNum;
-    this.foodEatenFlag = false;
     this.foodNum = initFoodNum;
     this.setFoodNum(initFoodNum, this.canvasColumCells, this.canvasRowCells, this.cellUnitSize);
     this.initializeFoodSet(
@@ -22,7 +21,6 @@ export class Food {
       this.canvasRowCells,
       this.cellUnitSize
     );
-    this.foodIndexToUpdate = -1;
 
     // If the total amount of food eaten equals the product of the canvas height and width minus snake
     // We can obtain this number from the sum of scoreboard minus (1 or 2, depending on the single player or multiplayer mode)
@@ -66,23 +64,15 @@ export class Food {
 
   // Checks if there is any collision between a snake object
   // Call updateFoodSet to update food element that has been eaten by snake
-  checkSnakeCollision(someSnakeObjectArray) {
-    let snakeHead = someSnakeObjectArray[0];
-    for (let i = 0; i < this.foodSet.length; i++) {
-      if (this.foodSet[i].x == snakeHead.x && this.foodSet[i].y == snakeHead.y) {
-        this.updateFoodSetPosition(
-          i,
-          this.canvasColumCells,
-          this.canvasRowCells,
-          this.cellUnitSize
-        );
-        this.foodEatenFlag = true;
-      }
+  checkSnakeCollision(collisionIndex) {
+    if (collisionIndex >= 0) {
+      this.updateFoodSetPosition(
+        collisionIndex,
+        this.canvasColumCells,
+        this.canvasRowCells,
+        this.cellUnitSize
+      );
     }
-  }
-
-  resetFoodEatenFlag() {
-    this.foodEatenFlag = false;
   }
 
   // Update the food number if there is no user input
@@ -132,7 +122,7 @@ export class Food {
     }
   }
 
-  getFoodEatenFlag() {
-    return this.foodEatenFlag;
+  getFoodSetArray() {
+    return this.foodSet;
   }
 }
