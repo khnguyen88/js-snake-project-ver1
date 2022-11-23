@@ -156,14 +156,37 @@ function animate() {
     // Clears canvas before every loop, else previous drawn stuff remains!
     clearGameboardCanvasContext(gameboardCanvas, gameboardCanvasContext, canvasBGColor);
 
+    // Update and Draw Position of P1
     if (typeof snakeP1 != "undefined") {
+      // Update position of snake based on current direction, cell size, and position of snake
       snakeP1.updatePosition();
+      snakeP1.collisionWithSelf();
+      snakeP1.collisionWithWall(canvasHeight, canvasWidth);
+      snakeP1.deathCheck();
+      // Draw snake in canvas context
       snakeP1.draw(gameboardCanvasContext);
     }
 
+    // Update and Draw Position of Food
     if (typeof food != "undefined") {
+      // Draw set of food in canvas context
       food.draw(gameboardCanvasContext);
-      food.checkSnakeCollision(snakeP1.getSnakeBodyArray());
+    }
+
+    // Check if there is collision with P1 snake head (1st body cell) and food within canvas
+    if (typeof food != "undefined" && typeof snakeP1 != "undefined") {
+      // Check and update snake's hasEatenFoodSetIndex property to match element index in food set that was eaten
+      // If no food at was eaten, property value remains at -1 (This is value for not eaten)
+      snakeP1.collisionWithFood(food.getFoodSetArray()); //TODO: Rename this method
+
+      // Update and assign new position to element in food set that was previous eaten
+      food.checkSnakeCollision(snakeP1.hasEatenFoodSetIndex); //TODO: Rename this method
+
+      // Check if food was eaten, if so growBody, update score's property, update scoreboard DOM element to reflect score's value
+      snakeP1.eatFoodCheck(snakeP1.hasEatenFoodSetIndex); //TODO: Rename this method
+
+      // Reset the hasEatenFoodSetIndex property value back to -1. Assume no food is eaten after all the update.
+      snakeP1.resetEatenFoodSetIndex();
     }
   }
 }

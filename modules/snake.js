@@ -25,6 +25,7 @@ export class Snake {
     this.scoreBoardDOMElement;
     this.isAliveStatus = true;
     this.isAnimatedStatus = false;
+    this.hasEatenFoodSetIndex = -1;
 
     // Class Event Listener Method 1: Add event listener within the class
     document.addEventListener("keydown", (event) => this.movementControls(event), true);
@@ -169,10 +170,14 @@ export class Snake {
   }
 
   // Update the snake scoreboard
-  updateScoreBoard() {}
+  updateScoreBoard() {
+    this.scoreBoardDOMElement.innerHTML = this.score;
+  }
 
   // Update the score of user snake
-  updateScore() {}
+  updateScore() {
+    this.score++;
+  }
 
   // Update the pausedStatus
   updatePauseStatus(AnimationStatus) {
@@ -235,28 +240,24 @@ export class Snake {
     if (this.isAnimatedStatus == true) {
       switch (event.key) {
         case this.keyDownInputs.up:
-          console.log("Up");
           if (this.yDir == 0) {
             this.yDir = -1;
             this.xDir = 0;
           }
-          console.log("YEAAAHHH-UP");
           break;
 
         case this.keyDownInputs.down:
-          console.log("Down");
           if (this.yDir == 0) {
             this.yDir = 1;
             this.xDir = 0;
           }
-          console.log("YEAAAHHH-DOWN");
+
           break;
 
         case this.keyDownInputs.left:
           if (this.xDir == 0) {
             this.yDir = 0;
             this.xDir = -1;
-            console.log("YEAAAHHH-LEFT");
           }
           break;
 
@@ -264,13 +265,11 @@ export class Snake {
           if (this.xDir == 0) {
             this.yDir = 0;
             this.xDir = 1;
-            console.log("YEAAAHHH-RIGHT");
           }
           break;
 
         case " ":
-          console.log("YEAAAHHH-Space");
-          this.growBody();
+          this.changeColor();
           break;
       }
     }
@@ -278,26 +277,107 @@ export class Snake {
 
   // Check position of snake "head", at element [0] in body
   // If snake head position coordinates (X, Y) matches the food
-  eatFoodCheck() {}
+  // To Do: Move food eaten algorithm check over into snake class
+  // Pass in foodSet array into parameter and check
+  // If food not eaten return -1
+  // Else return element index of eaten food
+  // Snake will take this value and update the food position at index i that was eaten
+  // We want to do this to ensure that snake eat food
+  eatFoodCheck(foodCollisionIndex) {
+    if (foodCollisionIndex >= 0) {
+      this.updateScore();
+      this.updateScoreBoard();
+      this.growBody();
+    }
+  }
 
-  // Check position of snake "head", at element [0] in body
-  // If snake head position coordinates (X, Y) matches the food
-  eatFoodCheck() {}
+  collisionWithFood(foodSetArray) {
+    let tempFoodArray = foodSetArray;
+    for (let i = 0; i < tempFoodArray.length; i++) {
+      if (tempFoodArray[i].x == this.snakeBody[0].x && tempFoodArray[i].y == this.snakeBody[0].y) {
+        this.hasEatenFoodSetIndex = i;
+      }
+    }
+  }
 
   // Checks if snake dies
-  deathCheck() {}
+  deathCheck() {
+    if (!this.isAliveStatus) {
+      this.isAnimatedStatus = false;
+      alert("Snake Player has died! Score: " + this.score);
+      window.location.reload();
+    }
+  }
 
   // Checks if snake "head" collided w/ wall
-  collisionWithWall() {}
-
-  // Checks if snake "head" collided w/ enemy "head"
-  // Both player loses
-  collisionWithEnemyBodyCheck() {}
+  collisionWithWall(canvasHeight, canvasWidth) {
+    if (
+      this.snakeBody[0].x < 0 ||
+      this.snakeBody[0].x > canvasWidth - this.cellUnitSize ||
+      this.snakeBody[0].y < 0 ||
+      this.snakeBody[0].y > canvasHeight - this.cellUnitSize
+    ) {
+      this.die();
+    }
+  }
 
   // Checks if snake "head" collided w/ enemy "body"
   // This player's snake loses
-  collisionWithEnemyHeadCheck() {}
+  collisionWithEnemyBodyCheck(otherSnakeBody) {
+    if (this.snakeBody.length >= 1) {
+      for (let i = 1; i < otherSnakeBody.length; i++) {
+        if (
+          otherSnakeBody[i].x == this.snakeBody[0].x &&
+          otherSnakeBody[i].y == this.snakeBody[0].y
+        ) {
+          this.die();
+        }
+      }
+    }
+  }
+  // Checks if snake "head" collided w/ enemy "head"
+  // Both player loses  // This player's snake loses
+  collisionWithEnemyHeadCheck(otherSnakeBody) {
+    if (otherSnakeBody[0].x == this.snakeBody[0].x && otherSnakeBody[0].y == this.snakeBody[0].y) {
+      this.die();
+    }
+  }
+
+  // Checks if snake "head" collided w/ own "body"
+  // This player's snake loses
+  // Snake can't really touch itself until it is at a certain length
+  collisionWithSelf() {
+    if (this.snakeBody.length >= 5) {
+      for (let i = 1; i < this.snakeBody.length; i++) {
+        if (
+          this.snakeBody[i].x == this.snakeBody[0].x &&
+          this.snakeBody[i].y == this.snakeBody[0].y
+        ) {
+          this.die();
+        }
+      }
+    }
+  }
 
   // Snake dies
-  die() {}
+  die() {
+    this.isAliveStatus = false;
+  }
+
+  resetEatenFoodSetIndex() {
+    this.hasEatenFoodSetIndex = -1;
+  }
+
+  changeColor() {
+    // Learning Source: https://css-tricks.com/snippets/javascript/random-hex-color/
+    // Source did not come with explanation, but I figured it out on my won
+    // 256 * 256 * 256 = 16777216
+    // Color Starts from 0 to 255
+    // We also randomize up too but not including 16777216, agin 0
+    // We floor to round down to the nearest whole number
+    // toString(16) converts the number to a base-16.
+    let stringColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    this.bodyColor = stringColor;
+    this.scoreBoardDOMElement.style.color = stringColor;
+  }
 }
