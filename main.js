@@ -160,6 +160,8 @@ function animate() {
     if (typeof snakeP1 != "undefined") {
       // Update position of snake based on current direction, cell size, and position of snake
       snakeP1.updatePosition();
+      snakeP1.collisionWithSelf();
+      snakeP1.collisionWithWall(canvasHeight, canvasWidth);
       // Draw snake in canvas context
       snakeP1.draw(gameboardCanvasContext);
     }
