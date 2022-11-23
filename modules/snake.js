@@ -321,13 +321,27 @@ export class Snake {
     }
   }
 
-  // Checks if snake "head" collided w/ enemy "head"
-  // Both player loses
-  collisionWithEnemyBodyCheck() {}
-
   // Checks if snake "head" collided w/ enemy "body"
   // This player's snake loses
-  collisionWithEnemyHeadCheck() {}
+  collisionWithEnemyBodyCheck(otherSnakeBody) {
+    if (this.snakeBody.length >= 1) {
+      for (let i = 1; i < otherSnakeBody.length; i++) {
+        if (
+          otherSnakeBody[i].x == this.snakeBody[0].x &&
+          otherSnakeBody[i].y == this.snakeBody[0].y
+        ) {
+          this.die();
+        }
+      }
+    }
+  }
+  // Checks if snake "head" collided w/ enemy "head"
+  // Both player loses  // This player's snake loses
+  collisionWithEnemyHeadCheck(otherSnakeBody) {
+    if (otherSnakeBody[0].x == this.snakeBody[0].x && otherSnakeBody[0].y == this.snakeBody[0].y) {
+      this.die();
+    }
+  }
 
   // Checks if snake "head" collided w/ own "body"
   // This player's snake loses
