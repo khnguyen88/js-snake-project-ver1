@@ -162,6 +162,7 @@ function animate() {
       snakeP1.updatePosition();
       snakeP1.collisionWithSelf();
       snakeP1.collisionWithWall(canvasHeight, canvasWidth);
+      snakeP1.deathCheck();
       // Draw snake in canvas context
       snakeP1.draw(gameboardCanvasContext);
     }
