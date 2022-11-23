@@ -269,7 +269,7 @@ export class Snake {
           break;
 
         case " ":
-          this.growBody();
+          this.changeColor();
           break;
       }
     }
@@ -301,7 +301,13 @@ export class Snake {
   }
 
   // Checks if snake dies
-  deathCheck() {}
+  deathCheck() {
+    if (!this.isAliveStatus) {
+      this.isAnimatedStatus = false;
+      alert("Snake Player has died! Score: " + this.score);
+      window.location.reload();
+    }
+  }
 
   // Checks if snake "head" collided w/ wall
   collisionWithWall(canvasHeight, canvasWidth) {
@@ -311,7 +317,7 @@ export class Snake {
       this.snakeBody[0].y < 0 ||
       this.snakeBody[0].y > canvasHeight - this.cellUnitSize
     ) {
-      this.changeColor();
+      this.die();
     }
   }
 
@@ -333,14 +339,16 @@ export class Snake {
           this.snakeBody[i].x == this.snakeBody[0].x &&
           this.snakeBody[i].y == this.snakeBody[0].y
         ) {
-          this.changeColor();
+          this.die();
         }
       }
     }
   }
 
   // Snake dies
-  die() {}
+  die() {
+    this.isAliveStatus = false;
+  }
 
   resetEatenFoodSetIndex() {
     this.hasEatenFoodSetIndex = -1;
@@ -354,6 +362,8 @@ export class Snake {
     // We also randomize up too but not including 16777216, agin 0
     // We floor to round down to the nearest whole number
     // toString(16) converts the number to a base-16.
-    this.bodyColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    let stringColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
+    this.bodyColor = stringColor;
+    this.scoreBoardDOMElement.style.color = stringColor;
   }
 }
