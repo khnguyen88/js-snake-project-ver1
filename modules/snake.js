@@ -304,7 +304,16 @@ export class Snake {
   deathCheck() {}
 
   // Checks if snake "head" collided w/ wall
-  collisionWithWall() {}
+  collisionWithWall(canvasHeight, canvasWidth) {
+    if (
+      this.snakeBody[0].x < 0 ||
+      this.snakeBody[0].x > canvasWidth - this.cellUnitSize ||
+      this.snakeBody[0].y < 0 ||
+      this.snakeBody[0].y > canvasHeight - this.cellUnitSize
+    ) {
+      this.changeColor();
+    }
+  }
 
   // Checks if snake "head" collided w/ enemy "head"
   // Both player loses
@@ -316,12 +325,35 @@ export class Snake {
 
   // Checks if snake "head" collided w/ own "body"
   // This player's snake loses
-  collisionWithEnemyHeadCheck() {}
+  // Snake can't really touch itself until it is at a certain length
+  collisionWithSelf() {
+    if (this.snakeBody.length >= 5) {
+      for (let i = 1; i < this.snakeBody.length; i++) {
+        if (
+          this.snakeBody[i].x == this.snakeBody[0].x &&
+          this.snakeBody[i].y == this.snakeBody[0].y
+        ) {
+          this.changeColor();
+        }
+      }
+    }
+  }
 
   // Snake dies
   die() {}
 
   resetEatenFoodSetIndex() {
     this.hasEatenFoodSetIndex = -1;
+  }
+
+  changeColor() {
+    // Learning Source: https://css-tricks.com/snippets/javascript/random-hex-color/
+    // Source did not come with explanation, but I figured it out on my won
+    // 256 * 256 * 256 = 16777216
+    // Color Starts from 0 to 255
+    // We also randomize up too but not including 16777216, agin 0
+    // We floor to round down to the nearest whole number
+    // toString(16) converts the number to a base-16.
+    this.bodyColor = "#" + Math.floor(Math.random() * 16777215).toString(16);
   }
 }
